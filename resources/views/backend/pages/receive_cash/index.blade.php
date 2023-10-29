@@ -53,17 +53,21 @@
                                 <td>{{ $cash->user->name }}</td>
                                 <td>{{ $cash->paid_amount }}</td>
                                 <td>
-                                    <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
-                                    {{-- <a href="{{ route('receive_cashs.delete', $receive_cash->id) }}" class="btn btn-danger">حذف</a> --}}
-                                    <form action="{{ route('receive_cash.delete', $cash->id) }}" method="post"
-                                        style="display:inline">
-                                        @csrf
-                                        @method('delete')
+                                    @can('receive-edit')
+                                        <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
+                                    @endcan
 
-                                        <button type="submit" class="btn btn-danger">
-                                            حذف
-                                        </button>
-                                    </form>
+                                    @can('receive-delete')
+                                        <form action="{{ route('receive_cash.delete', $cash->id) }}" method="post"
+                                            style="display:inline">
+                                            @csrf
+                                            @method('delete')
+
+                                            <button type="submit" class="btn btn-danger">
+                                                حذف
+                                            </button>
+                                        </form>
+                                    @endcan
                                     <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
                                         طباعة
                                     </a>

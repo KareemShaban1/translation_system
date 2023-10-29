@@ -33,6 +33,19 @@
             </div>
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Role:</strong>
+                <select name="roles[]" class="form-control" multiple>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role }}" {{ in_array($role, $userRole) ? 'selected' : '' }}>
+                            {{ $role }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
 
         <button type="submit" class="btn btn-primary">تأكيد</button>
     </form>

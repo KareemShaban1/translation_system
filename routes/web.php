@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseItemsController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\ReceiveCashController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceProvidersController;
 use App\Http\Controllers\UsersController;
@@ -135,6 +136,16 @@ Route::group([
         Route::get('expense_types/edit/{id}',[ExpenseTypeController::class,'edit'])->name('expense_types.edit');
         Route::put('expense_types/update/{id}',[ExpenseTypeController::class,'update'])->name('expense_types.update');
         Route::delete('expense_types/delete/{id}',[ExpenseTypeController::class,'destroy'])->name('expense_types.delete');
+    });
+
+    
+    Route::group([],function(){
+        Route::get('roles',[RoleController::class,'index'])->name('roles.index');
+        Route::get('roles/create',[RoleController::class,'create'])->name('roles.create');
+        Route::post('roles/store',[RoleController::class,'store'])->name('roles.store');
+        Route::get('roles/edit/{id}',[RoleController::class,'edit'])->name('roles.edit');
+        Route::put('roles/update/{id}',[RoleController::class,'update'])->name('roles.update');
+        Route::delete('roles/delete/{id}',[RoleController::class,'destroy'])->name('roles.delete');
     });
 
     

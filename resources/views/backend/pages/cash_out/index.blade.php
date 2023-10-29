@@ -39,18 +39,21 @@
                                     {{ $cash->service_provider->name }}
                                 </td>
 
-                                {{-- <td>{{ $cash->paid_amount }}</td> --}}
-                                <td>
-                                    <a href="{{ route('cash_out.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
-                                    <form action="{{ route('cash_out.delete', $cash->id) }}" method="post"
-                                        style="display:inline">
-                                        @csrf
-                                        @method('delete')
+                                <td> @can('cashOut-edit')
+                                        <a href="{{ route('cash_out.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
+                                    @endcan
 
-                                        <button type="submit" class="btn btn-danger">
-                                            حذف
-                                        </button>
-                                    </form>
+                                    @can('cashOut-delete')
+                                        <form action="{{ route('cash_out.delete', $cash->id) }}" method="post"
+                                            style="display:inline">
+                                            @csrf
+                                            @method('delete')
+
+                                            <button type="submit" class="btn btn-danger">
+                                                حذف
+                                            </button>
+                                        </form>
+                                    @endcan
                                     <a href="{{ route('cash_out.pdfReport', $cash->id) }}" class="btn btn-primary">
                                         طباعة
                                     </a>

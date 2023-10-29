@@ -13,29 +13,20 @@
                     <thead>
                         <tr>
                             <th> Id </th>
-                            <th>أسم المستخدم</th>
-                            <th>البريد الألكترونى</th>
-                            <th>Roles</th>
+                            <th>أسم ال Role</th>
                             <th>العمليات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($roles as $role)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $role->id }}</td>
+                                <td>{{ $role->name }}</td>
+
                                 <td>
-                                    @if (!empty($user->getRoleNames()))
-                                        @foreach ($user->getRoleNames() as $v)
-                                            <label class="badge badge-success">{{ $v }}</label>
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">تعديل</a>
+                                    <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-warning">تعديل</a>
                                     {{-- <a href="{{ route('users.delete', $user->id) }}" class="btn btn-danger">حذف</a> --}}
-                                    <form action="{{ route('users.delete', $user->id) }}" method="post"
+                                    <form action="{{ route('roles.delete', $role->id) }}" method="post"
                                         style="display:inline">
                                         @csrf
                                         @method('delete')

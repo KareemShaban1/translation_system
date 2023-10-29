@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.1/css/dataTables.dateTime.min.css">
+    <style>
+        #custom_table th,
+        #custom_table td {
+            text-align: center;
+        }
+    </style>
 @endpush
 
 
@@ -40,6 +46,8 @@
                             <th> رقم الإيصال </th>
                             <th>التاريخ </th>
                             <th>أسم المستخدم </th>
+                            <th>أسم العميل </th>
+                            <th>أسم الخدمة </th>
                             <th> المبلغ </th>
                             <th>العمليات</th>
                         </tr>
@@ -51,6 +59,8 @@
                                 <td>{{ $cash->receipt_number }}</td>
                                 <td>{{ $cash->date }}</td>
                                 <td>{{ $cash->user->name }}</td>
+                                <td>{{ $cash->client->name }}</td>
+                                <td>{{ $cash->service->name }}</td>
                                 <td>{{ $cash->paid_amount }}</td>
                                 <td>
                                     <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
@@ -70,6 +80,14 @@
                                 </td>
                             </tr>
                         @endforeach
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" style="text-align: center"><b> الاجمالى : <span
+                                        id="totalAmount">{{ number_format($receiveCash->sum('paid_amount'), 2) }}</span></b>
+                            </td>
+                        </tr>
+                    </tfoot>
                     </tbody>
                 </table>
             </div>
@@ -92,40 +110,20 @@
         $(document).ready(function() {
             let minDate, maxDate;
 
-            //   function initializeDataTable() {
-            //       var options = {
-            //           stateSave: true,
-            //           oLanguage: {
-            //               sSearch: 'البحث',
-            //               sInfo: "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
-            //               sZeroRecords: 'لا يوجد سجل متتطابق',
-            //               sEmptyTable: 'لا يوجد بيانات في الجدول',
-            //               oPaginate: {
-            //                   sFirst: "First",
-            //                   sLast: "الأخير",
-            //                   sNext: "التالى",
-            //                   sPrevious: "السابق"
-            //               },
-            //           },
-            //           sortable: true,
-            //           dom: 'Bfrtip',
-            //           buttons: [{
-            //               extend: 'copyHtml5',
-            //               exportOptions: {
-            //                   columns: [0, ':visible']
-            //               }
-            //           }, {
-            //               extend: 'excelHtml5',
-            //               exportOptions: {
-            //                   columns: [0, 1, 2, 3]
-            //               },
-            //               title: "مقدمى الخدمات"
-            //           }, 'colvis'],
-            //       };
 
-            //       datatable = $('#custom_table').DataTable(options);
-            //   }
+            // Function to update the total amount
+            function updateTotalAmount() {
+                const totalAmount = datatable
+                    .column(6, {
+                        search: 'applied'
+                    })
+                    .data()
+                    .reduce(function(a, b) {
+                        return a + parseFloat(b);
+                    }, 0);
 
+                $('#totalAmount').text(totalAmount.toFixed(2));
+            }
 
             // Initialize DataTable with your custom options
             var datatable = $('#custom_table').DataTable({
@@ -199,6 +197,10 @@
                 datatable.draw();
             });
 
+            datatable.on('search', function() {
+                updateTotalAmount();
+            });
+
             // Add an event listener to clear the date range when the "Clear" button is clicked
             $('#clearDateRange').on('click', function() {
                 // Clear the "min" and "max" input fields
@@ -212,8 +214,8 @@
                 //           datatable.destroy();
                 //           initializeDataTable();
                 //       }
+
             });
         });
     </script>
 @endpush
-

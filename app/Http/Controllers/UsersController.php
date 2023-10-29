@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+// use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -24,7 +27,8 @@ class UsersController extends Controller
     public function create()
     {
         //
-        return view('backend.pages.users.create');
+        $roles = Role::pluck('name','name')->all();
+        return view('backend.pages.users.create',compact('roles'));
 
     }
 
@@ -41,6 +45,8 @@ class UsersController extends Controller
         ]);
     
         $user = User::create($validatedData);
+
+        $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index');
     
@@ -61,7 +67,11 @@ class UsersController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        return view('backend.pages.users.edit',compact('user'));
+
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
+    
+        return view('backend.pages.users.edit',compact('user','roles','userRole'));
 
     }
 
@@ -87,6 +97,10 @@ class UsersController extends Controller
         $validatedData = $request->validate($rules);
         
         $user->update($validatedData);
+
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+    
+        $user->assignRole($request->input('roles'));
         
         return redirect()->route('users.index');
     }

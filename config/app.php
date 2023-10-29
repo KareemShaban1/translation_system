@@ -157,6 +157,8 @@ return [
 
     'providers' => ServiceProvider::defaultProviders()->merge([
         Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
 
         /*
          * Package Service Providers...
