@@ -27,7 +27,7 @@
 
         <div class="row">
 
-            <div class="form-group col-md-4">
+            {{-- <div class="form-group col-md-4">
                 <label for="expense">المصروف</label>
                 <select class="form-control" id="expense" value="{{ $cashOut->expense }}" name="expense">
                     <option value="rent">أيجار</option>
@@ -36,10 +36,23 @@
                 @error('expense')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
+            </div> --}}
+
+            <div class="form-group col-md-4">
+                <label for="expense_type_id">نوع المصروف</label>
+                <select class="form-control" id="expense_type_id" name="expense_type_id">
+                    <option value="" readonly>أختار من القائمة</option>
+                    @foreach ($expense_type as $type)
+                        <option value="{{ $type->id }}" @selected($cashOut->expense_type_id == $type->id)>{{ $type->name }}</option>
+                    @endforeach
+                </select>
+                @error('expense_type_id')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="form-group col-md-4">
-                <label for="recipient">المصروف</label>
+                <label for="recipient">نوع المستلم</label>
                 <select class="form-control" id="recipient" name="recipient">
                     <option value="" readonly>أختار من القائمة</option>
                     <option value="client" @selected($cashOut->recipient == 'client')>عميل</option>
@@ -102,7 +115,7 @@
                 @enderror
             </div>
 
-            <div class="form-group col-md-6">
+            {{-- <div class="form-group col-md-6">
                 <label for="service_id">الخدمة</label>
                 <select class="form-control" id="service_id" name="service_id">
                     <option value="" readonly>أختار من القائمة</option>
@@ -113,11 +126,11 @@
                 @error('service_id')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> --}}
 
         </div>
 
-        {{-- <div class="row">
+        <div class="row">
 
             <div class="form-group col-md-4">
                 <label for="paid_amount"> المبلغ المدفوع</label>
@@ -128,7 +141,7 @@
                 @enderror
             </div>
 
-        </div> --}}
+        </div>
 
 
         <button type="submit" class="btn btn-primary">تأكيد</button>

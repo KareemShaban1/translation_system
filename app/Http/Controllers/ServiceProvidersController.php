@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ExpenseType;
+use App\Models\ReceiveCash;
 use App\Models\ServiceProviders;
 use Illuminate\Http\Request;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class ServiceProvidersController extends Controller
 {
@@ -24,7 +27,9 @@ class ServiceProvidersController extends Controller
     public function create()
     {
         //
-        return view('backend.pages.service_providers.create');
+        $expense_type = ExpenseType::all();
+
+        return view('backend.pages.service_providers.create',compact('expense_type'));
 
     }
 
@@ -35,12 +40,14 @@ class ServiceProvidersController extends Controller
     {
         //
         
+        // dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email',
+            'expense_type_id' => 'nullable|exists:expense_types,id',
         ]);
     
         // Store the service provider
@@ -64,7 +71,9 @@ class ServiceProvidersController extends Controller
     {
         //
         $serviceProvider = ServiceProviders::findOrFail($id);
-        return view('backend.pages.service_providers.edit',compact('serviceProvider'));
+        $expense_type = ExpenseType::all();
+
+        return view('backend.pages.service_providers.edit',compact('expense_type','serviceProvider'));
 
     }
 
@@ -82,6 +91,8 @@ class ServiceProvidersController extends Controller
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email,' . $serviceProvider->id,
+            'expense_type_id' => 'nullable|exists:expense_types,id',
+
         ]);
     
         // Update the service provider
@@ -100,6 +111,16 @@ class ServiceProvidersController extends Controller
         $service_provider->delete();
         return redirect()->route('service_providers.index');
 
+    }
+
+    public function serviceProviderReceiveCash($id){
+        $receiveCash= ReceiveCash::where('service_id',$id)->get();
+        $data = [
+            'receiveCash'=>$receiveCash
+        ];
+
+        $pdf =  PDF::loadView('backend.pages.service_providers.service_provider_report',$data);
+        return $pdf->stream('Report.pdf');
         
     }
 }

@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th> Id </th>
@@ -37,6 +37,9 @@
                                             حذف
                                         </button>
                                     </form>
+                                    <a href="{{ route('clients.clientReceiveCash', $client->id) }}"
+                                        class="btn btn-primary">تقارير العميل</a>
+
                                 </td>
                             </tr>
                         @endforeach
@@ -46,3 +49,41 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $('#custom_table').DataTable({
+            stateSave: true,
+            oLanguage: {
+                sSearch: 'البحث',
+                sInfo: "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
+                sZeroRecords: 'لا يوجد سجل متتطابق',
+                sEmptyTable: 'لا يوجد بيانات في الجدول',
+                oPaginate: {
+                    sFirst: "First",
+                    sLast: "الأخير",
+                    sNext: "التالى",
+                    sPrevious: "السابق"
+                },
+            },
+            sortable: true,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, ':visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3]
+                    },
+                    title: "العملاء"
+                },
+
+                'colvis'
+            ]
+        });
+    </script>
+@endpush

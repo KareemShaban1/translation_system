@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\ReceiveCash;
 use Illuminate\Http\Request;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class ClientController extends Controller
 {
@@ -97,5 +99,16 @@ class ClientController extends Controller
         $client->delete();
         return redirect()->route('clients.index');
 
+    }
+
+    public function clientReceiveCash($id){
+        $receiveCash= ReceiveCash::where('client_id',$id)->get();
+        $data = [
+            'receiveCash'=>$receiveCash
+        ];
+
+        $pdf =  PDF::loadView('backend.pages.clients.client_report',$data);
+        return $pdf->stream('Report.pdf');
+        
     }
 }

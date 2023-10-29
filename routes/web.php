@@ -4,6 +4,7 @@ use App\Http\Controllers\CashOutController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseItemsController;
+use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\ReceiveCashController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceProvidersController;
@@ -22,16 +23,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('login');
+// });
 
 Route::group([
     'middleware' => ['auth:web']
 ],function(){
 
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/',[DashboardController::class,'index'])->name('dashboard');
 
+    
+// Route::get('test', function () {
+//     return view('backend.pages.receive_cash.test');
+// });
     
     Route::group([],function(){
         Route::get('users',[UsersController::class,'index'])->name('users.index');
@@ -40,8 +45,6 @@ Route::group([
         Route::get('users/edit/{id}',[UsersController::class,'edit'])->name('users.edit');
         Route::put('users/update/{id}',[UsersController::class,'update'])->name('users.update');
         Route::delete('users/delete/{id}',[UsersController::class,'destroy'])->name('users.delete');
-    
-        
     });
     
     Route::group([],function(){
@@ -51,6 +54,8 @@ Route::group([
         Route::get('clients/edit/{id}',[ClientController::class,'edit'])->name('clients.edit');
         Route::put('clients/update/{id}',[ClientController::class,'update'])->name('clients.update');
         Route::delete('clients/delete/{id}',[ClientController::class,'destroy'])->name('clients.delete');
+        Route::get('clients/clientReceiveCash/{id}',[ClientController::class,'clientReceiveCash'])->name('clients.clientReceiveCash');
+
         
     });
     
@@ -62,7 +67,9 @@ Route::group([
         Route::get('service_providers/edit/{id}',[ServiceProvidersController::class,'edit'])->name('service_providers.edit');
         Route::put('service_providers/update/{id}',[ServiceProvidersController::class,'update'])->name('service_providers.update');
         Route::delete('service_providers/delete/{id}',[ServiceProvidersController::class,'destroy'])->name('service_providers.delete');
-        
+        Route::get('service_providers/serviceProviderReceiveCash/{id}',[ServiceProvidersController::class,'serviceProviderReceiveCash'])
+        ->name('service_providers.serviceProviderReceiveCash');
+
         
     });
     
@@ -75,29 +82,40 @@ Route::group([
         Route::put('services/update/{id}',[ServiceController::class,'update'])->name('services.update');
         Route::delete('services/delete/{id}',[ServiceController::class,'destroy'])->name('services.delete');
         
+        Route::get('services/serviceReceiveCash/{id}',[ServiceController::class,'serviceReceiveCash'])->name('services.serviceReceiveCash');
+
+        
+        
         
     });
     
     
     Route::group([],function(){
         Route::get('receive_cash',[ReceiveCashController::class,'index'])->name('receive_cash.index');
+        Route::get('receive_cash/reports',[ReceiveCashController::class,'reports'])->name('receive_cash.reports');
         Route::get('receive_cash/create',[ReceiveCashController::class,'create'])->name('receive_cash.create');
         Route::post('receive_cash/store',[ReceiveCashController::class,'store'])->name('receive_cash.store');
         Route::get('receive_cash/edit/{id}',[ReceiveCashController::class,'edit'])->name('receive_cash.edit');
         Route::put('receive_cash/update/{id}',[ReceiveCashController::class,'update'])->name('receive_cash.update');
         Route::delete('receive_cash/delete/{id}',[ReceiveCashController::class,'destroy'])->name('receive_cash.delete');
+        Route::get('receive_cash/pdf_report/{id}',[ReceiveCashController::class,'pdfReport'])->name('receive_cash.pdfReport');
+        Route::get('test/{id}',[ReceiveCashController::class,'test'])->name('test');
+
         
+
         
     });
     
     Route::group([],function(){
         Route::get('cash_out',[CashOutController::class,'index'])->name('cash_out.index');
+        Route::get('cash_out/reports',[CashOutController::class,'reports'])->name('cash_out.reports');
         Route::get('cash_out/create',[CashOutController::class,'create'])->name('cash_out.create');
         Route::post('cash_out/store',[CashOutController::class,'store'])->name('cash_out.store');
         Route::get('cash_out/edit/{id}',[CashOutController::class,'edit'])->name('cash_out.edit');
         Route::put('cash_out/update/{id}',[CashOutController::class,'update'])->name('cash_out.update');
         Route::delete('cash_out/delete/{id}',[CashOutController::class,'destroy'])->name('cash_out.delete');
-        
+        Route::get('cash_out/pdf_report/{id}',[CashOutController::class,'pdfReport'])->name('cash_out.pdfReport');
+
         
     });
     
@@ -108,7 +126,16 @@ Route::group([
         Route::get('expense_items/edit/{id}',[ExpenseItemsController::class,'edit'])->name('expense_items.edit');
         Route::put('expense_items/update/{id}',[ExpenseItemsController::class,'update'])->name('expense_items.update');
         Route::delete('expense_items/delete/{id}',[ExpenseItemsController::class,'destroy'])->name('expense_items.delete');
-        
-        
     });
+
+    Route::group([],function(){
+        Route::get('expense_types',[ExpenseTypeController::class,'index'])->name('expense_types.index');
+        Route::get('expense_types/create',[ExpenseTypeController::class,'create'])->name('expense_types.create');
+        Route::post('expense_types/store',[ExpenseTypeController::class,'store'])->name('expense_types.store');
+        Route::get('expense_types/edit/{id}',[ExpenseTypeController::class,'edit'])->name('expense_types.edit');
+        Route::put('expense_types/update/{id}',[ExpenseTypeController::class,'update'])->name('expense_types.update');
+        Route::delete('expense_types/delete/{id}',[ExpenseTypeController::class,'destroy'])->name('expense_types.delete');
+    });
+
+    
 });

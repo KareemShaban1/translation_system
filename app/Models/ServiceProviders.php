@@ -15,5 +15,5 @@ class ServiceProviders extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','address','phone_number','another_phone_number','email'];
+    protected $fillable = ['name','address','phone_number','another_phone_number','email','expense_type_id'];
 }

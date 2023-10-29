@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expense_items', function (Blueprint $table) {
             $table->id();
-            $table->string('expense_name');
+            $table->foreignId('expense_type_id')->constrained('expense_types')->cascadeOnDelete();
             $table->string('recipient');
             $table->softDeletes();
             $table->timestamps();

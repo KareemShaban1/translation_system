@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ExpenseType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class ExpenseItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            'expense_name' => fake()->word,
+            // 'expense_name' => fake()->word,
+            'expense_type_id' => ExpenseType::inRandomOrder()->first()->id,
             'recipient' => fake()->randomElement(['client', 'service_provider', 'user']),
         ];
     }

@@ -21,6 +21,7 @@
     <!-- <link href="css/sb-admin-2.min.css" rel="stylesheet"> -->
     <link href="{{ asset('backend/css/rtl.css') }}" rel="stylesheet">
 
+    @stack('css')
 
 
 </head>
@@ -110,8 +111,18 @@
 
 
     <!-- Page level plugins -->
-    <script src="{{ asset('backend/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    {{-- <script src="{{ asset('backend/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script> --}}
+
+    <script src="{{ asset('backend/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/jszip.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('backend/datatables/export-tables/buttons.print.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>

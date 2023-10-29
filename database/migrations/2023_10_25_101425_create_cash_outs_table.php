@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('cash_outs', function (Blueprint $table) {
             $table->id();
             $table->string('receipt_number');
-            $table->string('date');
-            $table->enum('expense',['rent','salary']);
-            $table->enum('recipient',['client','service_provider','user']);
-            $table->foreignId('service_id')->nullable()->constrained('services')->nullOnDelete();
+            $table->date('date');
+            $table->foreignId('expense_type_id')->nullable()->constrained('expense_types')->nullOnDelete();
+            // $table->enum('recipient',['client','service_provider','user']);
+            // $table->foreignId('service_id')->nullable()->constrained('services')->nullOnDelete();
             $table->foreignId('service_provider_id')->nullable()->constrained('service_providers')->nullOnDelete();
-            $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();          
+            // $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();  
+            $table->float('paid_amount')->default(0);   
+            $table->text('description')->nullable();
+     
             $table->softDeletes();  
             $table->timestamps();
         });

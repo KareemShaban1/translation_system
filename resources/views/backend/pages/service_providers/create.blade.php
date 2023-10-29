@@ -54,6 +54,21 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="expense_type_id">نوع المصروف</label>
+                <select class="form-control" id="expense_type_id" name="expense_type_id">
+                    <option value="" readonly>أختار من القائمة</option>
+                    @foreach ($expense_type as $type)
+                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+                @error('expense_type_id')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
 
         <button type="submit" class="btn btn-primary">تأكيد</button>
     </form>

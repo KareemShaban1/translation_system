@@ -1,5 +1,11 @@
 @extends('backend.layouts.master')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.1/css/dataTables.dateTime.min.css">
+@endpush
+
 
 @section('content')
     <!-- DataTales Example -->
@@ -9,7 +15,25 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                {{-- <div class="row" style="margin: 10px">
+                    <div class="col-md-4">
+                        <label for="">من :</label>
+                        <input type="text" id="min" name="min">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="">إلى :</label>
+                        <input type="text" id="max" name="max">
+                    </div>
+
+                    <div class="col-md-4">
+                        <button id="clearDateRange" class="btn btn-secondary">Clear</button>
+                    </div>
+
+                </div> --}}
+
+                <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th> Id </th>
@@ -40,6 +64,9 @@
                                             حذف
                                         </button>
                                     </form>
+                                    <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
+                                        طباعة
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -49,3 +76,50 @@
         </div>
     </div>
 @endsection
+
+
+
+@push('scripts')
+    <script>
+        var datatable = $('#custom_table').DataTable({
+            stateSave: true,
+            oLanguage: {
+                sSearch: 'البحث',
+                sInfo: "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
+                sZeroRecords: 'لا يوجد سجل متتطابق',
+                sEmptyTable: 'لا يوجد بيانات في الجدول',
+                oPaginate: {
+                    sFirst: "First",
+                    sLast: "الأخير",
+                    sNext: "التالى",
+                    sPrevious: "السابق"
+                },
+            },
+            sortable: true,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, ':visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
+                    title: "أستلام نقدية"
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
+                    title: "أستلام نقدية"
+                },
+
+                'colvis'
+            ]
+        });
+    </script>
+@endpush

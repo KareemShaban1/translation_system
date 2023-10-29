@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th> Id </th>
@@ -32,23 +32,11 @@
                                 </td>
                                 <td>{{ $cash->date }}</td>
                                 <td>
-                                    @if ($cash->recipient == 'client')
-                                        عميل
-                                    @elseif ($cash->recipient == 'service_provider')
-                                        مقدم خدمة
-                                    @elseif ($cash->recipient == 'user')
-                                        مستخدم
-                                    @endif
+                                    {{ $cash->expense_type->name }}
                                 </td>
 
                                 <td>
-                                    @if ($cash->recipient == 'client')
-                                        {{ $cash->client->name }}
-                                    @elseif ($cash->recipient == 'service_provider')
-                                        {{ $cash->service_provider->name }}
-                                    @elseif ($cash->recipient == 'user')
-                                        {{ $cash->user->name }}
-                                    @endif
+                                    {{ $cash->service_provider->name }}
                                 </td>
 
                                 {{-- <td>{{ $cash->paid_amount }}</td> --}}
@@ -63,6 +51,9 @@
                                             حذف
                                         </button>
                                     </form>
+                                    <a href="{{ route('cash_out.pdfReport', $cash->id) }}" class="btn btn-primary">
+                                        طباعة
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -72,3 +63,50 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $('#custom_table').DataTable({
+            stateSave: true,
+            oLanguage: {
+                sSearch: 'البحث',
+                // sInfo: " _TOTAL_ entries to show (_START_ to _END_)",
+
+                sZeroRecords: 'لا يوجد سجل متتطابق',
+                sEmptyTable: 'لا يوجد بيانات في الجدول',
+                oPaginate: {
+                    sFirst: "الأول",
+                    sLast: "الأخير",
+                    sNext: "التالى",
+                    sPrevious: "السابق"
+                },
+            },
+            sortable: true,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [0, ':visible']
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
+                    title: "صرف نقدية"
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4]
+                    },
+                    title: "صرف نقدية"
+                },
+
+
+                'colvis'
+            ]
+        });
+    </script>
+@endpush

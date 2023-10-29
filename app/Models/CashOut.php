@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class CashOut extends Model 
 {
@@ -15,7 +17,37 @@ class CashOut extends Model
      *
      * @var array
      */
-    protected $fillable = ['receipt_number','expense','recipient','date','service_id','service_provider_id','client_id','user_id'];
+    protected $fillable = [
+        'receipt_number','expense_type_id','paid_amount','date','description',
+        // 'service_id',
+        'service_provider_id','client_id','user_id'];
+
+        protected static function booted()
+    {
+
+        // while creating order make order number take next available number
+        static::creating(function (CashOut $cashOut) {
+            //20230001 - 20230002
+            $cashOut->receipt_number = CashOut::getNextOrderNumber();
+            $cashOut->user_id = Auth::user()->id;
+        });
+    }
+
+
+    public static function getNextOrderNumber()
+    {
+        // SELECT MAX(number) FROM orders
+        $year = Carbon::now()->year;
+        $receipt_number = CashOut::whereYear('created_at', $year)->max('receipt_number');
+
+        // if there is number in this year add 1 to this number
+        if ($receipt_number) {
+            return $receipt_number + 1;
+        }
+        // if not return 0001
+        return $year . '0001';
+    }
+
 
 
     public function user(){
@@ -32,5 +64,10 @@ class CashOut extends Model
     public function service(){
         return $this->belongsTo(Service::class);
     }
+
+    public function expense_type(){
+        return $this->belongsTo(ExpenseType::class);
+    }
+    
     
 }

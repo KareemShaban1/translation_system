@@ -11293,3 +11293,12 @@
           width: 100%;
         }
         
+
+        /* custom  */
+        .dt-buttons.btn-group {
+          float: left;
+        }
+
+        .dataTables_filter input{
+          margin-right: 10px;
+        }

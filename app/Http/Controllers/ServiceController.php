@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ReceiveCash;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class ServiceController extends Controller
 {
@@ -93,5 +95,16 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->delete();
         return redirect()->route('services.index');
+    }
+
+    public function serviceReceiveCash($id){
+        $receiveCash= ReceiveCash::where('service_id',$id)->get();
+        $data = [
+            'receiveCash'=>$receiveCash
+        ];
+
+        $pdf =  PDF::loadView('backend.pages.services.service_receive_cash',$data);
+        return $pdf->stream('Report.pdf');
+        
     }
 }

@@ -2,7 +2,7 @@
  <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
      <!-- Sidebar - Brand -->
-     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
          <div class="sidebar-brand-icon rotate-n-15">
              <i class="fas fa-laugh-wink"></i>
          </div>
@@ -14,7 +14,7 @@
 
      <!-- Nav Item - Dashboard -->
      <li class="nav-item active">
-         <a class="nav-link" href="index.html">
+         <a class="nav-link" href="{{ route('dashboard') }}">
              <i class="fas fa-fw fa-tachometer-alt"></i>
              <span>لوحة التحكم</span></a>
      </li>
@@ -75,6 +75,22 @@
          </div>
      </li>
 
+     <!-- Expense Items -->
+     <li class="nav-item">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#expense_types"
+             aria-expanded="true" aria-controls="expense_types">
+             <i class="fas fa-fw fa-money-bill"></i>
+             <span> أنواع المصروفات</span>
+         </a>
+         <div id="expense_types" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+             <div class="bg-white py-2 collapse-inner rounded">
+                 {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
+                 <a class="collapse-item" href="{{ route('expense_types.create') }}">أضافة نوع صرف</a>
+                 <a class="collapse-item" href="{{ route('expense_types.index') }}">كل أنواع المصروفات</a>
+             </div>
+         </div>
+     </li>
+
      <!-- Service Providers -->
      <li class="nav-item">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#service_providers"
@@ -112,6 +128,8 @@
                  {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                  <a class="collapse-item" href="{{ route('receive_cash.create') }}">أضافة أستلام نقدية</a>
                  <a class="collapse-item" href="{{ route('receive_cash.index') }}">كل أستلامات النقدية</a>
+                 <a class="collapse-item" href="{{ route('receive_cash.reports') }}"> تقارير أستلامات النقدية</a>
+
              </div>
          </div>
      </li>
@@ -128,12 +146,14 @@
                  {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                  <a class="collapse-item" href="{{ route('cash_out.create') }}">أضافة صرف نقدية</a>
                  <a class="collapse-item" href="{{ route('cash_out.index') }}">كل صرف النقدية</a>
+                 <a class="collapse-item" href="{{ route('cash_out.reports') }}">تقارير صرف النقدية</a>
+
              </div>
          </div>
      </li>
 
      <!-- Expense Items -->
-     <li class="nav-item">
+     {{-- </ul> <li class="nav-item">
          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#expense_items"
              aria-expanded="true" aria-controls="expense_items">
              <i class="fas fa-fw fa-money-bill"></i>
@@ -141,13 +161,11 @@
          </a>
          <div id="expense_items" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
-                 {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                  <a class="collapse-item" href="{{ route('expense_items.create') }}">أضافة بند صرف</a>
                  <a class="collapse-item" href="{{ route('expense_items.index') }}">كل بنود المصروفات</a>
              </div>
          </div>
-     </li>
-
+     </li> --}}
 
 
 

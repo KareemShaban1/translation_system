@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\CashOut;
 use App\Models\Client;
 use App\Models\ExpenseItems;
+use App\Models\ExpenseType;
 use App\Models\ReceiveCash;
 use App\Models\Service;
 use App\Models\ServiceProviders;
@@ -22,10 +23,12 @@ class DatabaseSeeder extends Seeder
     {
        User::factory(10)->create();
        Client::factory(10)->create();
+       ExpenseType::factory(10)->create();
        ServiceProviders::factory(10)->create();
-       Service::factory(10)->create();
+    //    Service::factory(10)->create();
+    $this->call(ServiceSeeder::class);
     //    CashOut::factory(10)->create();
-       ReceiveCash::factory(10)->create();
+    //    ReceiveCash::factory(10)->create();
        ExpenseItems::factory(10)->create();
 
 

@@ -156,6 +156,8 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -184,6 +186,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
+
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

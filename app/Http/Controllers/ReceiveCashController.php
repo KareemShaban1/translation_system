@@ -8,6 +8,9 @@ use App\Models\Service;
 use App\Models\ServiceProviders;
 use App\Models\User;
 use Illuminate\Http\Request;
+// use Barryvdh\DomPDF\Facade\Pdf;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
+
 
 class ReceiveCashController extends Controller
 {
@@ -19,6 +22,14 @@ class ReceiveCashController extends Controller
         //
         $receiveCash = ReceiveCash::with('user','client','service_provider','service')->get();
         return view('backend.pages.receive_cash.index',compact('receiveCash'));
+    }
+
+
+    public function reports()
+    {
+        //
+        $receiveCash = ReceiveCash::with('user','client','service_provider','service')->get();
+        return view('backend.pages.receive_cash.reports',compact('receiveCash'));
     }
 
     /**
@@ -43,12 +54,12 @@ class ReceiveCashController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'receipt_number' => 'required|string',
+            // 'receipt_number' => 'required|string',
             'date' => 'required|date',
             'service_id' => 'required|exists:services,id',
             'service_provider_id' => 'nullable|exists:service_providers,id',
             'client_id' => 'required|exists:clients,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
             'paid_amount' => 'required|numeric',
         ]);
 
@@ -119,4 +130,29 @@ class ReceiveCashController extends Controller
         return redirect()->route('receive_cash.index');
 
     }
+
+    public function pdfReport($id){
+        
+        $receiveCash = ReceiveCash::findOrFail($id);
+        $data = [
+            'receiveCash'=>$receiveCash
+        ];
+        
+        $pdf =  PDF::loadView('backend.pages.receive_cash.pdf_report',$data);
+        return $pdf->stream('Report.pdf');
+    }
+
+    public function test($id){
+        
+        $receiveCash = ReceiveCash::findOrFail($id);
+        // $data = [
+        //     'receiveCash'=>$receiveCash
+        // ];
+        return view('backend.pages.receive_cash.test',compact('receiveCash'));
+        
+        // $pdf =  PDF::loadView('backend.pages.receive_cash.pdf_report',$data);
+        // return $pdf->stream('Report.pdf');
+    }
+
+
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
+use App\Models\ExpenseType;
 use App\Models\Service;
 use App\Models\ServiceProviders;
 use App\Models\User;
@@ -26,12 +27,15 @@ class CashOutFactory extends Factory
         return [
             'receipt_number' => fake()->unique()->randomNumber(),
             'date' => fake()->date,
-            'expense' => $expense,
+            // 'expense' => $expense,
             'recipient' => $recipient,
-            'service_id' => Service::inRandomOrder()->first()->id,
+            'expense_type_id' => ExpenseType::inRandomOrder()->first()->id,
+            // 'service_id' => Service::inRandomOrder()->first()->id,
             'service_provider_id' => $recipient === 'service_provider' ? ServiceProviders::inRandomOrder()->first()->id : null,
             'client_id' => $recipient === 'client' ? Client::inRandomOrder()->first()->id : null,
             'user_id' => $recipient === 'user' ? User::inRandomOrder()->first()->id : null,
+            'paid_amount' => fake()->randomFloat(2, 10, 1000), // Generate random paid amount between 10 and 1000
+
         ];
     }
 }
