@@ -60,14 +60,14 @@
 
         <div class="row">
             <div class="form-group col-md-4">
-                <label for="expense_type_id">نوع المصروف</label>
-                <select class="form-control" id="expense_type_id" name="expense_type_id">
+                <label for="service_id">نوع المصروف</label>
+                <select class="form-control" id="service_id" name="service_id">
                     <option value="" readonly>أختار من القائمة</option>
-                    @foreach ($expense_type as $type)
-                        <option value="{{ $type->id }}" @selected($serviceProvider->expense_type_id == $type->id)>{{ $type->name }}</option>
+                    @foreach ($services as $service)
+                        <option value="{{ $service->id }}" @selected($serviceProvider->service_id == $service->id)>{{ $service->name }}</option>
                     @endforeach
                 </select>
-                @error('expense_type_id')
+                @error('service_id')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
             </div>

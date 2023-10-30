@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ExpenseType;
 use App\Models\ReceiveCash;
+use App\Models\Service;
 use App\Models\ServiceProviders;
 use Illuminate\Http\Request;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
@@ -27,9 +28,8 @@ class ServiceProvidersController extends Controller
     public function create()
     {
         //
-        $expense_type = ExpenseType::all();
-
-        return view('backend.pages.service_providers.create',compact('expense_type'));
+        $services = Service::all();
+        return view('backend.pages.service_providers.create',compact('services'));
 
     }
 
@@ -47,7 +47,7 @@ class ServiceProvidersController extends Controller
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email',
-            'expense_type_id' => 'nullable|exists:expense_types,id',
+            'service_id' => 'nullable|exists:services,id',
         ]);
     
         // Store the service provider
@@ -71,9 +71,9 @@ class ServiceProvidersController extends Controller
     {
         //
         $serviceProvider = ServiceProviders::findOrFail($id);
-        $expense_type = ExpenseType::all();
+        $services = Service::all();
 
-        return view('backend.pages.service_providers.edit',compact('expense_type','serviceProvider'));
+        return view('backend.pages.service_providers.edit',compact('services','serviceProvider'));
 
     }
 
@@ -91,7 +91,7 @@ class ServiceProvidersController extends Controller
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email,' . $serviceProvider->id,
-            'expense_type_id' => 'nullable|exists:expense_types,id',
+            'service_id' => 'nullable|exists:services,id',
 
         ]);
     

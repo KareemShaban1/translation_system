@@ -16,22 +16,7 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                {{-- <div class="row" style="margin: 10px">
-                    <div class="col-md-4">
-                        <label for="">من :</label>
-                        <input type="text" id="min" name="min">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label for="">إلى :</label>
-                        <input type="text" id="max" name="max">
-                    </div>
-
-                    <div class="col-md-4">
-                        <button id="clearDateRange" class="btn btn-secondary">Clear</button>
-                    </div>
-
-                </div> --}}
+               
 
                 <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
                     <thead>

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('another_phone_number');
             $table->string('email');
-            $table->foreignId('expense_type_id')->constrained('expense_types')->cascadeOnDelete();
+            // $table->foreignId('expense_type_id')->constrained('expense_types')->cascadeOnDelete();
+            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
+
             $table->softDeletes();
             $table->timestamps();
         });
