@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id(); 
             $table->string('name');
             $table->string('phone_number');
-            $table->string('another_phone_number');
+            $table->string('another_phone_number')->nullable();
             $table->string('address');
             $table->softDeletes();
             $table->timestamps();
