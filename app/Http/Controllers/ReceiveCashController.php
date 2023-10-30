@@ -61,6 +61,7 @@ class ReceiveCashController extends Controller
             'client_id' => 'required|exists:clients,id',
             // 'user_id' => 'required|exists:users,id',
             'paid_amount' => 'required|numeric',
+            'description'=>'nullable'
         ]);
 
         ReceiveCash::create($validatedData);
@@ -111,6 +112,8 @@ class ReceiveCashController extends Controller
             'client_id' => 'required|exists:clients,id',
             'user_id' => 'required|exists:users,id',
             'paid_amount' => 'required|numeric',
+            'description'=>'nullable'
+
         ]);
         
         $receiveCash->update($validatedData);

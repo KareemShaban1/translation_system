@@ -102,6 +102,16 @@
 
                 </div>
 
+                <div class="row">
+
+                    <div class="form-group col-md-12">
+                        <label for="description">الوصف</label>
+                        <textarea class="form-control" id="description" name="description" rows="3">
+                            {{ $receiveCash->description }}
+                        </textarea>
+                    </div>
+                </div>
+
 
                 <button type="submit" class="btn btn-primary">تأكيد</button>
             </form>

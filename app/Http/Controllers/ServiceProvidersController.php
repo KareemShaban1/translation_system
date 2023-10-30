@@ -28,8 +28,8 @@ class ServiceProvidersController extends Controller
     public function create()
     {
         //
-        $services = Service::all();
-        return view('backend.pages.service_providers.create',compact('services'));
+        $expense_types = ExpenseType::all();
+        return view('backend.pages.service_providers.create',compact('expense_types'));
 
     }
 
@@ -47,7 +47,7 @@ class ServiceProvidersController extends Controller
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email',
-            'service_id' => 'nullable|exists:services,id',
+            'expense_type_id' => 'nullable|exists:expense_types,id',
         ]);
     
         // Store the service provider
@@ -71,9 +71,9 @@ class ServiceProvidersController extends Controller
     {
         //
         $serviceProvider = ServiceProviders::findOrFail($id);
-        $services = Service::all();
+        $expense_types = ExpenseType::all();
 
-        return view('backend.pages.service_providers.edit',compact('services','serviceProvider'));
+        return view('backend.pages.service_providers.edit',compact('expense_types','serviceProvider'));
 
     }
 
@@ -91,7 +91,7 @@ class ServiceProvidersController extends Controller
             'phone_number' => 'required|string|max:20',
             'another_phone_number' => 'nullable|string|max:20',
             'email' => 'required|email|unique:service_providers,email,' . $serviceProvider->id,
-            'service_id' => 'nullable|exists:services,id',
+            'expense_type_id' => 'nullable|exists:expense_types,id',
 
         ]);
     

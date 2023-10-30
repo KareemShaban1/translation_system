@@ -20,6 +20,8 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
+                <div class="row">
 
                     <div class="form-group col-md-6">
                         <label for="email">البريد الألكترونى</label>
@@ -51,6 +53,9 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
+                </div>
+                <div class="row">
                     <div class="form-group col-md-6">
                         <label for="another_phone_number"> رقم هاتف أخر</label>
                         <input type="phone" class="form-control" id="another_phone_number" name="another_phone_number">
@@ -62,14 +67,16 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="service_id"> أسم الخدمة</label>
-                        <select class="form-control" id="service_id" name="service_id">
-                            <option value="" readonly>أختار من القائمة</option>
-                            @foreach ($services as $service)
-                                <option value="{{ $service->id }}">{{ $service->name }}</option>
+                        <label for="expense_type_id">
+                            {{-- نوع المصروف --}}
+                        </label>
+                        <select class="form-control" id="expense_type_id" name="expense_type_id">
+                            <option value="" readonly>أختار من نوع المصروف</option>
+                            @foreach ($expense_types as $expense_type)
+                                <option value="{{ $expense_type->id }}">{{ $expense_type->name }}</option>
                             @endforeach
                         </select>
-                        @error('service_id')
+                        @error('expense_type_id')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

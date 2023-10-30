@@ -147,4 +147,14 @@ class CashOutController extends Controller
         $pdf =  PDF::loadView('backend.pages.cash_out.pdf_report',$data);
         return $pdf->stream('Report.pdf');
     }
+
+    public function getProvider(Request $request){
+       
+        
+            $expense_type_id = $request->expense_type_id;
+            $service_providers = ServiceProviders::where('expense_type_id',$expense_type_id)->get();
+    
+            return response()->json(['service_providers' => $service_providers]);
+        
+    }
 }

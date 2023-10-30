@@ -42,87 +42,22 @@
                     </div>
                 </div>
 
-                <div class="row">
 
-
-
-
-                    {{-- <div class="form-group col-md-4">
-                <label for="recipient">نوع المستلم</label>
-                <select class="form-control" id="recipient" name="recipient">
-                    <option value="" readonly>أختار من القائمة</option>
-                    <option value="client">عميل</option>
-                    <option value="service_provider">مقدم خدمة</option>
-                    <option value="user">مستخدم</option>
-                </select>
-                @error('recipient')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
-
-                </div>
-
-
-                <div class="row">
-
-                    {{-- <div class="form-group col-md-4" id="user_div">
-                <label for="user_id">المستخدم</label>
-                <select class="form-control" id="user_id" name="user_id">
-                    <option value="" readonly>أختار من القائمة</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
-                @error('user_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
-
-                    {{-- <div class="form-group col-md-4" id="client_div">
-                <label for="client_id">العميل</label>
-                <select class="form-control" id="client_id" name="client_id">
-                    <option value="" readonly>أختار من القائمة</option>
-
-                    @foreach ($clients as $client)
-                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                    @endforeach
-                </select>
-                @error('client_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
-
-
-
-
-                </div>
 
                 <div class="row" id="service_provider_div">
                     <div class="form-group col-md-6">
                         <label for="service_provider_id">مقدم الخدمة</label>
                         <select class="form-control" id="service_provider_id" name="service_provider_id">
-                            <option value="" readonly>أختار من القائمة</option>
+                            {{-- <option value="" readonly>أختار من القائمة</option>
                             @foreach ($service_providers as $provider)
                                 <option value="{{ $provider->id }}">{{ $provider->name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                         @error('service_provider_id')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    {{-- <div class="form-group col-md-6">
-                <label for="service_id">الخدمة</label>
-                <select class="form-control" id="service_id" name="service_id">
-                    <option value="" readonly>أختار من القائمة</option>
-                    @foreach ($services as $service)
-                        <option value="{{ $service->id }}">{{ $service->name }}</option>
-                    @endforeach
-                </select>
-                @error('service_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
 
                 </div>
 
@@ -138,6 +73,16 @@
 
                 </div>
 
+                <div class="row">
+
+                    <div class="form-group col-md-12">
+                        <label for="description">الوصف</label>
+                        <textarea class="form-control" id="description" name="description" rows="3">
+                            
+                        </textarea>
+                    </div>
+                </div>
+
 
                 <button type="submit" class="btn btn-primary">تأكيد</button>
             </form>
@@ -149,6 +94,41 @@
 
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            // When the "governorate" dropdown value changes
+            $('select[name="expense_type_id"]').on('change', function() {
+                var expense_type_id = $(this).val(); // Get the selected governorate ID
+
+                console.log(expense_type_id);
+
+                // Make an AJAX request to fetch cities based on the selected governorate
+                $.ajax({
+                    url: '/cash_out/getProvider',
+                    method: 'GET',
+                    data: {
+                        expense_type_id: expense_type_id
+                    },
+                    success: function(response) {
+                        // Clear the current city options
+                        $('select[name="service_provider_id"]').empty();
+                        $('select[name="service_provider_id"]').append(
+                            '<option disabled selected>أختار من القائمة</option>');
+
+                        $.each(response.service_providers, function(key, service_provider) {
+
+                            $('select[name="service_provider_id"]').append(
+                                '<option value="' + service_provider
+                                .id + '">' + service_provider.name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
     {{-- <script>
         const recipientSelect = document.getElementById('recipient');
         const userFields = document.getElementById('user_id');

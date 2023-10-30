@@ -116,6 +116,7 @@ Route::group([
         Route::put('cash_out/update/{id}',[CashOutController::class,'update'])->name('cash_out.update');
         Route::delete('cash_out/delete/{id}',[CashOutController::class,'destroy'])->name('cash_out.delete');
         Route::get('cash_out/pdf_report/{id}',[CashOutController::class,'pdfReport'])->name('cash_out.pdfReport');
+        Route::get('cash_out/getProvider',[CashOutController::class,'getProvider'])->name('cash_out.getProvider');
 
         
     });

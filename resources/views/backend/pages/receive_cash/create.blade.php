@@ -29,10 +29,12 @@
                     </div>
 
 
-                    <div class="form-group col-md-6">
-                        <label for="service_id">الخدمة</label>
+                    <div class="form-group col-md-6" style="margin-top: 15px">
+                        <label for="service_id">
+                            {{--    الخدمة --}}
+                        </label>
                         <select class="form-control" id="service_id" name="service_id">
-                            <option value="" readonly>أختار من القائمة</option>
+                            <option value="" readonly>أختار من الخدمات</option>
                             @foreach ($services as $service)
                                 <option value="{{ $service->id }}">{{ $service->name }}</option>
                             @endforeach
@@ -74,10 +76,12 @@
                 @enderror
             </div> --}}
 
-                    <div class="form-group col-md-6" id="client_div">
-                        <label for="client_id">العميل</label>
+                    <div class="form-group col-md-6" id="client_div" style="margin-top: 15px">
+                        <label for="client_id">
+                            {{-- العميل --}}
+                        </label>
                         <select class="form-control" id="client_id" name="client_id">
-                            <option value="" readonly>أختار من القائمة</option>
+                            <option value="" readonly>أختار من العملاء</option>
 
                             @foreach ($clients as $client)
                                 <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -88,10 +92,12 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="service_provider_id">مقدم الخدمة</label>
+                    <div class="form-group col-md-6" style="margin-top: 15px">
+                        <label for="service_provider_id">
+                            {{-- مقدم الخدمة --}}
+                        </label>
                         <select class="form-control" id="service_provider_id" name="service_provider_id">
-                            <option value="" readonly>أختار من القائمة</option>
+                            <option value="" readonly>أختار من مقدمى الخدمات</option>
                             @foreach ($service_providers as $provider)
                                 <option value="{{ $provider->id }}">{{ $provider->name }}</option>
                             @endforeach
@@ -118,6 +124,14 @@
                         @enderror
                     </div>
 
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-md-12">
+                        <label for="description">الوصف</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    </div>
                 </div>
 
 
