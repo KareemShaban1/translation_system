@@ -152,6 +152,7 @@ class CashOutController extends Controller
        
         
             $expense_type_id = $request->expense_type_id;
+            
             $service_providers = ServiceProviders::where('expense_type_id',$expense_type_id)->get();
     
             return response()->json(['service_providers' => $service_providers]);

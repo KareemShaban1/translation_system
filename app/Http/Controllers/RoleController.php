@@ -107,6 +107,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request->all());
+
+        
         $this->validate($request, [
             'name' => 'required',
             'permission' => 'required',
