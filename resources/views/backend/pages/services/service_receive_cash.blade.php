@@ -441,14 +441,17 @@
 
                                                                                 </tr>
 
+                                                                                @php
+                                                                                    $numberConverter = app(\App\Services\NumberConverter::class);
+                                                                                    $converted_number = $numberConverter->toArabicWords($receiveCash->sum('paid_amount'));
+                                                                                @endphp
+
                                                                                 <tr class="total">
                                                                                     <td colspan="6"
-                                                                                        style="text-align: center; direction:rtl">
-                                                                                        الأجمالى:
-                                                                                        {{ numberToArabicWords(number_format($receiveCash->sum('paid_amount'))) }}
+                                                                                        style="text-align:center; direction:rtl">
+                                                                                        الأجمالى {{ $converted_number }}
                                                                                         جنية فقط لا غير
                                                                                     </td>
-
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>

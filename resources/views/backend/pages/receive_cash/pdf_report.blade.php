@@ -369,8 +369,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="content-block">
-                                                        <h2
-                                                            style="font-family: 'almarai';">
+                                                        <h2 style="font-family: 'almarai';">
                                                             شكراً لأستخدامك تطبيقنا</h2>
                                                     </td>
                                                 </tr>
@@ -405,6 +404,9 @@
                                                                                     <td>
                                                                                         أسم الخدمة
                                                                                     </td>
+                                                                                    <td>
+                                                                                        أسم المستخدم
+                                                                                    </td>
 
                                                                                 </tr>
 
@@ -420,18 +422,26 @@
                                                                                         {{ $receiveCash->service->name }}
                                                                                     </td>
 
+                                                                                    <td style=" padding:20px 0px;">
+                                                                                        {{ $receiveCash->user->name }}
+                                                                                    </td>
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td></td>
                                                                                     <td></td>
-
+                                                                                    <td></td>
                                                                                 </tr>
 
+                                                                                @php
+                                                                                    $numberConverter = app(\App\Services\NumberConverter::class);
+                                                                                    $converted_number = $numberConverter->toArabicWords($receiveCash->paid_amount);
+                                                                                @endphp
+
                                                                                 <tr class="total">
-                                                                                    <td colspan="2"
+                                                                                    <td colspan="3"
                                                                                         style="text-align:center; direction:rtl">
-                                                                                        الأجمالى
-                                                                                        {{ numberToArabicWords($receiveCash->paid_amount) }}
+                                                                                        الأجمالى {{ $converted_number }}
                                                                                         جنية فقط لا غير
                                                                                     </td>
                                                                                 </tr>

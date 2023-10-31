@@ -413,11 +413,15 @@
 
                                                                                 </tr>
 
+                                                                                @php
+                                                                                    $numberConverter = app(\App\Services\NumberConverter::class);
+                                                                                    $converted_number = $numberConverter->toArabicWords($cashOut->paid_amount);
+                                                                                @endphp
+
                                                                                 <tr class="total">
                                                                                     <td colspan="3"
                                                                                         style="text-align:center; direction:rtl">
-                                                                                        الأجمالى
-                                                                                        {{ numberToArabicWords($cashOut->paid_amount) }}
+                                                                                        الأجمالى {{ $converted_number }}
                                                                                         جنية فقط لا غير
                                                                                     </td>
                                                                                 </tr>
