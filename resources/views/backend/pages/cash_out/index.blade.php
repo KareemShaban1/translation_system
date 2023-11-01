@@ -18,7 +18,7 @@
                             <th> نوع المستلم </th>
                             <th> أسم المستلم </th>
 
-                            {{-- <th> المبلغ </th> --}}
+                            <th> المبلغ </th>
                             <th>العمليات</th>
                         </tr>
                     </thead>
@@ -38,6 +38,9 @@
                                 <td>
                                     {{ $cash->service_provider->name }}
                                 </td>
+
+                                <td>{{ $cash->paid_amount }}</td>
+
 
                                 <td> @can('cashOut-edit')
                                         <a href="{{ route('cash_out.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
