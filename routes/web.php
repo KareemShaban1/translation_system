@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseItemsController;
 use App\Http\Controllers\ExpenseTypeController;
 use App\Http\Controllers\ReceiveCashController;
+use App\Http\Controllers\ReceiveCashReminderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceProvidersController;
@@ -95,6 +96,21 @@ Route::group([
         Route::delete('receive_cash/delete/{id}',[ReceiveCashController::class,'destroy'])->name('receive_cash.delete');
         Route::get('receive_cash/pdf_report/{id}',[ReceiveCashController::class,'pdfReport'])->name('receive_cash.pdfReport');
         Route::get('test/{id}',[ReceiveCashController::class,'test'])->name('test');
+        // Route::get('/print/{cashId}', [ReceiveCashController::class,'pdfReport'])->name('print.content');
+
+    });
+
+    Route::group([],function(){
+        
+        Route::get('receive_cash_reminder',[ReceiveCashReminderController::class,'index'])->name('receive_cash_reminder.index');
+        Route::get('receive_cash_reminder/show_reminders/{id}',[ReceiveCashReminderController::class,'show_reminders'])->name('receive_cash_reminder.show_reminders');
+        Route::get('receive_cash_reminder/create/{id}',[ReceiveCashReminderController::class,'create'])->name('receive_cash_reminder.create');
+        Route::post('receive_cash_reminder/store',[ReceiveCashReminderController::class,'store'])->name('receive_cash_reminder.store');
+        Route::get('receive_cash_reminder/edit/{id}',[ReceiveCashReminderController::class,'edit'])->name('receive_cash_reminder.edit');
+        Route::put('receive_cash_reminder/update/{id}',[ReceiveCashReminderController::class,'update'])->name('receive_cash_reminder.update');
+        Route::delete('receive_cash_reminder/delete/{id}',[ReceiveCashReminderController::class,'destroy'])->name('receive_cash_reminder.delete');
+        Route::get('receive_cash_reminder/pdf_report/{id}',[ReceiveCashReminderController::class,'pdfReport'])->name('receive_cash_reminder.pdfReport');
+
         
     });
     

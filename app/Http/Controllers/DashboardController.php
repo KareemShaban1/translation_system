@@ -23,8 +23,8 @@ class DashboardController extends Controller
         $receive_cash_count = ReceiveCash::count();
         $cash_out_count = CashOut::count();
         $expense_items_count = ExpenseItems::count();
-        $receive_cash_monthly = ReceiveCash::select(DB::raw('MONTH(date) as month'), DB::raw('SUM(paid_amount) as total_paid_amount'))
-        ->groupBy(DB::raw('MONTH(date)'))
+        $receive_cash_monthly = ReceiveCash::select(DB::raw('MONTH(receive_date) as month'), DB::raw('SUM(paid_amount) as total_paid_amount'))
+        ->groupBy(DB::raw('MONTH(receive_date)'))
         ->get();
         $cash_out_monthly = CashOut::select(DB::raw('MONTH(date) as month'), DB::raw('SUM(paid_amount) as total_paid_amount'))
         ->groupBy(DB::raw('MONTH(date)'))

@@ -25,7 +25,7 @@ class ServiceProvidersFactory extends Factory
             'another_phone_number' => fake()->phoneNumber,
             'address' => fake()->address,
             'email' => fake()->unique()->safeEmail(),
-            'service_id' => Service::inRandomOrder()->first()->id,
+            'expense_type_id' => ExpenseType::inRandomOrder()->first()->id,
 
         ];
     }

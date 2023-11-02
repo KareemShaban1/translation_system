@@ -23,12 +23,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PermissionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(LanguagesSeeder::class);
+
 
         //    User::factory(10)->create();
         Client::factory(10)->create();
-        // ExpenseType::factory(10)->create();
-        //    ServiceProviders::factory(10)->create();
-        //    Service::factory(10)->create();
+        ExpenseType::factory(10)->create();
+        Service::factory(10)->create();
+        ServiceProviders::factory(10)->create();
         // $this->call(ServiceSeeder::class);
         //    CashOut::factory(10)->create();
         //    ReceiveCash::factory(10)->create();

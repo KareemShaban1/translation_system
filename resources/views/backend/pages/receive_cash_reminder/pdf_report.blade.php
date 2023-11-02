@@ -379,15 +379,17 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="direction: rtl; float: right;">
-                                                                        أسم العميل : {{ $receiveCash->client->name }}
+                                                                        أسم العميل :
+                                                                        {{ $reminder->receiveCash->client->name }}
                                                                         <br>
-                                                                        {{-- <br> --}}
-                                                                        رقم الأيصال : {{ $receiveCash->receipt_number }}
-                                                                        {{-- <br> --}}
+                                                                        رقم الأيصال :
+                                                                        {{ $reminder->receiveCash->receipt_number }}
                                                                         <br>
-                                                                        التاريخ : {{ $receiveCash->receive_date }}
+                                                                        تاريخ الدفع :
+                                                                        {{ $reminder->receive_cash_reminder_date }}
                                                                         <br>
-                                                                        أسم المستخدم : {{ $receiveCash->user->name }}
+                                                                        أسم المستخدم :
+                                                                        {{ $reminder->receiveCash->user->name }}
                                                                         <br>
                                                                         <br>
                                                                         <br>
@@ -399,6 +401,9 @@
                                                                             cellspacing="0">
                                                                             <tbody>
                                                                                 <tr>
+                                                                                    <td style="text-align: left">
+                                                                                        المبلغ الباقى
+                                                                                    </td>
                                                                                     <td style="text-align: left">
                                                                                         المبلغ المدفوع
                                                                                     </td>
@@ -417,20 +422,26 @@
                                                                                 <tr>
                                                                                     <td
                                                                                         style="text-align: left; direction:rtl;
+                                                                                    padding:20px 0px;">
+                                                                                        {{ $reminder->remaining_amount }}
+                                                                                        جنية
+                                                                                    </td>
+
+                                                                                    <td
+                                                                                        style="text-align: left; direction:rtl;
                                                                                         padding:20px 0px;">
-                                                                                        {{ $receiveCash->paid_amount }}
-                                                                                        {{-- {{ numberToArabicWords($receiveCash->paid_amount) }} --}}
+                                                                                        {{ $reminder->paid_amount }}
                                                                                         جنية
                                                                                     </td>
 
                                                                                     <td
                                                                                         style="text-align: left; direction:rtl;
                                                                                     padding:20px 0px;">
-                                                                                        {{ $receiveCash->service_price }}
+                                                                                        {{ $reminder->receiveCash->service_price }}
                                                                                         جنية
                                                                                     </td>
                                                                                     <td style=" padding:20px 0px;">
-                                                                                        {{ $receiveCash->service->name }}
+                                                                                        {{ $reminder->receiveCash->service->name }}
                                                                                     </td>
 
                                                                                     {{-- <td style=" padding:20px 0px;">
@@ -442,15 +453,16 @@
                                                                                     <td></td>
                                                                                     <td></td>
                                                                                     <td></td>
+                                                                                    <td></td>
                                                                                 </tr>
 
                                                                                 @php
                                                                                     $numberConverter = app(\App\Services\NumberConverter::class);
-                                                                                    $converted_number = $numberConverter->toArabicWords($receiveCash->paid_amount);
+                                                                                    $converted_number = $numberConverter->toArabicWords($reminder->paid_amount);
                                                                                 @endphp
 
                                                                                 <tr class="total">
-                                                                                    <td colspan="3"
+                                                                                    <td colspan="4"
                                                                                         style="text-align:center; direction:rtl">
                                                                                         الأجمالى {{ $converted_number }}
                                                                                         جنية فقط لا غير

@@ -17,7 +17,11 @@ class ReceiveCash extends Model
      *
      * @var array
      */
-    protected $fillable = ['receipt_number','date','description','service_id','service_provider_id','client_id','user_id','paid_amount'];
+    protected $fillable = ['receipt_number',
+    'receive_date','description','service_id',
+    'service_provider_id','client_id','user_id',
+    'finish_date','from_lang_id','to_lang_id',
+    'service_price','paid_amount','remaining_amount'];
 
     protected static function booted()
     {

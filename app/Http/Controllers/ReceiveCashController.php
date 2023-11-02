@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Languages;
 use App\Models\ReceiveCash;
 use App\Models\Service;
 use App\Models\ServiceProviders;
@@ -42,8 +43,9 @@ class ReceiveCashController extends Controller
         $service_providers = ServiceProviders::all();
         $users = User::all();
         $clients = Client::all();
+        $languages = Languages::all();
         return view('backend.pages.receive_cash.create',
-        compact('services','service_providers','users','clients'));
+        compact('services','service_providers','users','clients','languages'));
 
     }
 
@@ -54,13 +56,16 @@ class ReceiveCashController extends Controller
     {
         //
         $validatedData = $request->validate([
-            // 'receipt_number' => 'required|string',
-            'date' => 'required|date',
+            'receive_date' => 'required|date',
             'service_id' => 'required|exists:services,id',
             'service_provider_id' => 'nullable|exists:service_providers,id',
             'client_id' => 'required|exists:clients,id',
-            // 'user_id' => 'required|exists:users,id',
+            'finish_date' => 'required|date',
+            'from_lang_id' => 'nullable|exists:languages,id',
+            'to_lang_id' => 'nullable|exists:languages,id',
+            'service_price' => 'required|numeric',
             'paid_amount' => 'required|numeric',
+            'remaining_amount' => 'required|numeric',
             'description'=>'nullable'
         ]);
 
@@ -91,8 +96,10 @@ class ReceiveCashController extends Controller
         $service_providers = ServiceProviders::all();
         $users = User::all();
         $clients = Client::all();
+        $languages = Languages::all();
+
         return view('backend.pages.receive_cash.edit',
-        compact('receiveCash','services','service_providers','users','clients'));
+        compact('receiveCash','services','service_providers','users','clients','languages'));
 
     }
 
@@ -105,13 +112,16 @@ class ReceiveCashController extends Controller
         $receiveCash = ReceiveCash::findOrFail($id);
         
         $validatedData = $request->validate([
-            'receipt_number' => 'required|string',
-            'date' => 'required|date',
+            'receive_date' => 'required|date',
             'service_id' => 'required|exists:services,id',
             'service_provider_id' => 'nullable|exists:service_providers,id',
             'client_id' => 'required|exists:clients,id',
-            'user_id' => 'required|exists:users,id',
+            'finish_date' => 'required|date',
+            'from_lang_id' => 'nullable|exists:languages,id',
+            'to_lang_id' => 'nullable|exists:languages,id',
+            'service_price' => 'required|numeric',
             'paid_amount' => 'required|numeric',
+            'remaining_amount' => 'required|numeric',
             'description'=>'nullable'
 
         ]);
@@ -144,6 +154,14 @@ class ReceiveCashController extends Controller
         $pdf =  PDF::loadView('backend.pages.receive_cash.pdf_report',$data);
         return $pdf->stream('Report.pdf');
     }
+
+    // public function pdfReport($id){
+    //     $receiveCash = ReceiveCash::findOrFail($id);
+
+    //     return view('backend.pages.receive_cash.pdf_report',compact('receiveCash'));
+
+        
+    // }
 
     public function test($id){
         

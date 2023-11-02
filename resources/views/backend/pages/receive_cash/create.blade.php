@@ -1,5 +1,14 @@
 @extends('backend.layouts.master')
 
+@push('css')
+    <style>
+        fieldset {
+            border: 2px groove;
+
+        }
+    </style>
+@endpush
+
 
 @section('content')
     <div class="card shadow mb-4">
@@ -11,18 +20,12 @@
             <form method="POST" action="{{ route('receive_cash.store') }}" autocomplete="off">
                 @csrf
                 <div class="row">
-                    {{-- <div class="form-group col-md-6">
-                <label for="receipt_number">رقم الإيصال</label>
-                <input type="text" class="form-control" name="receipt_number" id="receipt_number">
-                @error('receipt_number')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
+
 
                     <div class="form-group col-md-6">
-                        <label for="date">التاريخ</label>
-                        <input type="date" class="form-control" id="date" name="date">
-                        @error('date')
+                        <label for="receive_date">تاريخ أستلام النقدية</label>
+                        <input type="date" class="form-control" id="receive_date" name="receive_date">
+                        @error('receive_date')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
 
@@ -46,35 +49,57 @@
                 </div>
 
 
-                {{-- <div class="row">
-            <div class="form-group col-md-4">
-                <label for="recipient">نوع المستلم</label>
-                <select class="form-control" id="recipient" name="recipient">
-                    <option value="" readonly>أختار من القائمة</option>
-                    <option value="client">عميل</option>
-                    <option value="service_provider">مقدم خدمة</option>
-                    <option value="user">مستخدم</option>
-                </select>
-                @error('recipient')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div>
-        </div> --}}
+                <fieldset>
+                    <legend>خاصة بخدمة الترجمة فقط</legend>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="finish_date">تاريخ تسليم الخدمة</label>
+                            <input type="date" class="form-control" id="finish_date" name="finish_date">
+                            @error('finish_date')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <label for="from_lang_id">
+                                من لغة
+                            </label>
+                            <select class="form-control" id="from_lang_id" name="from_lang_id">
+                                <option value="" readonly>أختار من اللغات</option>
+                                @foreach ($languages as $language)
+                                    <option value="{{ $language->id }}">{{ $language->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('from_lang_id')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="to_lang_id">
+                                إلى لغة
+                            </label>
+                            <select class="form-control" id="to_lang_id" name="to_lang_id">
+                                <option value="" readonly>أختار من اللغات</option>
+                                @foreach ($languages as $language)
+                                    <option value="{{ $language->id }}">{{ $language->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('to_lang_id')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+
+
+                    </div>
+                </fieldset>
+
+
 
                 <div class="row">
 
-                    {{-- <div class="form-group col-md-4" id="user_div">
-                <label for="user_id">المستخدم</label>
-                <select class="form-control" id="user_id" name="user_id">
-                    <option value="" readonly>أختار من القائمة</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
-                @error('user_id')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
 
                     <div class="form-group col-md-6" id="client_div" style="margin-top: 15px">
                         <label for="client_id">
@@ -109,17 +134,32 @@
 
 
 
-
                 </div>
 
 
 
 
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <label for="service_price"> سعر الخدمة</label>
+                        <input type="number" class="form-control" name="service_price" id="service_price">
+                        @error('service_price')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
                         <label for="paid_amount"> المبلغ المدفوع</label>
                         <input type="number" class="form-control" name="paid_amount" id="paid_amount">
                         @error('paid_amount')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="remaining_amount"> المبلغ المتبقى</label>
+                        <input type="number" class="form-control" name="remaining_amount" id="remaining_amount">
+                        @error('remaining_amount')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
@@ -142,45 +182,23 @@
 @endsection
 
 @push('scripts')
-    {{-- <script>
-            const recipientSelect = document.getElementById('recipient');
-            const userFields = document.getElementById('user_id');
-            const clientFields = document.getElementById('client_id');
-            const serviceProviderFields = document.getElementById('service_provider_id');
+    <script>
+        // Get references to the input fields
+        const servicePriceInput = document.getElementById('service_price');
+        const paidAmountInput = document.getElementById('paid_amount');
+        const remainingAmountInput = document.getElementById('remaining_amount');
 
-            const userDiv = document.getElementById('user_div');
-            const clientDiv = document.getElementById('client_div');
-            const serviceProviderDiv = document.getElementById('service_provider_div');
+        // Add an event listener to servicePriceInput and paidAmountInput
+        servicePriceInput.addEventListener('input', updateRemainingAmount);
+        paidAmountInput.addEventListener('input', updateRemainingAmount);
 
-            // Hide all fields
-            userDiv.style.display = 'none';
-            clientDiv.style.display = 'none';
-            serviceProviderDiv.style.display = 'none';
-            // Hide all fields
-            // userFields.style.display = 'none';
-            // clientFields.style.display = 'none';
-            // serviceProviderFields.style.display = 'none';
+        // Function to update the remaining_amount input field
+        function updateRemainingAmount() {
+            const servicePrice = parseFloat(servicePriceInput.value) || 0;
+            const paidAmount = parseFloat(paidAmountInput.value) || 0;
+            const remainingAmount = servicePrice - paidAmount;
 
-            recipientSelect.addEventListener('change', () => {
-                const selectedRecipient = recipientSelect.value;
-
-                // Hide all fields
-                // userFields.style.display = 'none';
-                // clientFields.style.display = 'none';
-                // serviceProviderFields.style.display = 'none';
-
-                userDiv.style.display = 'none';
-                clientDiv.style.display = 'none';
-                serviceProviderDiv.style.display = 'none';
-
-                // Show fields based on the selected recipient
-                if (selectedRecipient === 'user') {
-                    userDiv.style.display = 'block';
-                } else if (selectedRecipient === 'client') {
-                    clientDiv.style.display = 'block';
-                } else if (selectedRecipient === 'service_provider') {
-                    serviceProviderDiv.style.display = 'flex';
-                }
-            });
-        </script> --}}
+            remainingAmountInput.value = remainingAmount;
+        }
+    </script>
 @endpush

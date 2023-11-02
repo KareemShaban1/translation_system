@@ -11,7 +11,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">أستلام نقدية</h6>
+            <h6 class="m-0 font-weight-bold text-primary"> سجل دفع </h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -23,59 +23,31 @@
                         <tr style="text-align: center">
                             <th> Id </th>
                             <th> رقم الإيصال </th>
-                            <th>تاريخ أستلام النقدية </th>
-                            {{-- <th>أسم المستخدم </th> --}}
+                            <th>تاريخ الدفع </th>
                             <th>أسم العميل </th>
-                            <th> سعر الخدمة </th>
                             <th> المبلغ المدفوع </th>
                             <th> المبلغ الباقى </th>
-                            <th>أضافة باقى</th>
                             <th>العمليات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($receiveCash as $cash)
-                            @php
-                                $reminder = App\Models\ReceiveCashReminder::where('receive_cash_id', $cash->id)
-                                    ->latest()
-                                    ->first();
-                            @endphp
+                        @foreach ($receive_cash_reminder as $reminder)
                             <tr>
-                                <td>{{ $cash->id }}</td>
-                                <td>{{ $cash->receipt_number }}</td>
-                                <td>{{ $cash->receive_date }}</td>
-                                {{-- <td>{{ $cash->user->name }}</td> --}}
-                                <td>{{ $cash->client->name }}</td>
-                                <td>{{ $cash->service_price }} جنية</td>
-                                <td>{{ $cash->paid_amount }} جنية</td>
-                                <td>{{ $cash->remaining_amount }} جنية
-                                    @isset($reminder)
-                                        @if ($reminder->remaining_amount == 0)
-                                            <div>
-                                                (تم الدفع بالكامل)
-                                            </div>
-                                        @endif
-                                    @endisset
+                                <td>{{ $reminder->id }}</td>
+                                <td>{{ $reminder->receiveCash->receipt_number }}</td>
+                                <td>{{ $reminder->receive_cash_reminder_date }}</td>
+                                <td>{{ $reminder->receiveCash->client->name }}</td>
+                                <td>{{ $reminder->paid_amount }} جنية</td>
+                                <td>{{ $reminder->remaining_amount }} جنية
+
                                 </td>
+
                                 <td>
-                                    @if ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount != 0))
-                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
-                                    @elseif ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount > 0))
-                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
-                                    @elseif ($cash->remaining_amount > 0 && !isset($reminder))
-                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
-                                    @else
-                                        تم الدفع
-                                    @endif
-                                </td>
-                                <td>
-                                    @can('receive-edit')
+                                    <a href="{{ route('receive_cash_reminder.pdfReport', $reminder->id) }}"
+                                        class="btn btn-primary">
+                                        طباعة
+                                    </a>
+                                    {{-- @can('receive-edit')
                                         <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
                                     @endcan
 
@@ -92,13 +64,7 @@
                                     @endcan
                                     <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
                                         طباعة
-                                    </a>
-                                    {{-- <button id="printButton" class="btn btn-primary">طباعة</button> --}}
-
-
-                                    <a class="btn btn-success"
-                                        href="{{ route('receive_cash_reminder.show_reminders', $cash->id) }}">عرض سجلات
-                                        الدفع</a>
+                                    </a> --}}
                                 </td>
                             </tr>
                         @endforeach
@@ -154,16 +120,4 @@
             ]
         });
     </script>
-
-    {{-- <script>
-        document.getElementById('printButton').addEventListener('click', function() {
-            var printWindow = window.open("{{ route('print.content', $cash->id) }}", "_blank");
-            printWindow.onload = function() {
-                printWindow.print();
-                printWindow.onafterprint = function() {
-                    printWindow.close();
-                };
-            };
-        });
-    </script> --}}
 @endpush
