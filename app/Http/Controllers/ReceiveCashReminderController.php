@@ -37,8 +37,14 @@ class ReceiveCashReminderController extends Controller
     }
 
     public function store(Request $request){
-        
-        // dd($request->all());
+    //     'receive_cash_reminder_date','paid_amount','remaining_amount',
+    // 'description'
+        $request->validate([
+            'receive_cash_reminder_date'=>'required|date',
+            'paid_amount'=>'required|numeric',
+            'remaining_amount'=>'required|numeric',
+            'description'=>'nullable|string'
+        ]);
         ReceiveCashReminder::create($request->except('reminder'));
 
         return redirect()->route('receive_cash_reminder.index');
