@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseItemsController;
 use App\Http\Controllers\ExpenseTypeController;
+use App\Http\Controllers\LanguagesController;
 use App\Http\Controllers\ReceiveCashController;
 use App\Http\Controllers\ReceiveCashReminderController;
 use App\Http\Controllers\RoleController;
@@ -159,6 +160,18 @@ Route::group([
         Route::get('roles/edit/{id}',[RoleController::class,'edit'])->name('roles.edit');
         Route::put('roles/update/{id}',[RoleController::class,'update'])->name('roles.update');
         Route::delete('roles/delete/{id}',[RoleController::class,'destroy'])->name('roles.delete');
+        
+    });
+
+
+    Route::group([],function(){
+        
+        Route::get('languages',[LanguagesController::class,'index'])->name('languages.index');
+        Route::get('languages/create',[LanguagesController::class,'create'])->name('languages.create');
+        Route::post('languages/store',[LanguagesController::class,'store'])->name('languages.store');
+        Route::get('languages/edit/{id}',[LanguagesController::class,'edit'])->name('languages.edit');
+        Route::put('languages/update/{id}',[LanguagesController::class,'update'])->name('languages.update');
+        Route::delete('languages/delete/{id}',[LanguagesController::class,'destroy'])->name('languages.delete');
         
     });
     
