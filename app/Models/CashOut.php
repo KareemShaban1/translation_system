@@ -28,7 +28,18 @@ class CashOut extends Model
         // while creating order make order number take next available number
         static::creating(function (CashOut $cashOut) {
             //20230001 - 20230002
-            $cashOut->receipt_number = CashOut::getNextOrderNumber();
+
+            $cashOut = CashOut::where('receipt_number',ReceiveCash::getNextOrderNumber())
+            ->where('deleted_at','<>',null)->first();
+            if(!$cashOut){
+                $cashOut->receipt_number = CashOut::getNextOrderNumber() + 1;
+
+            }else {
+                
+                $cashOut->receipt_number = CashOut::getNextOrderNumber();
+
+            }
+            
             $cashOut->user_id = Auth::user()->id;
         });
     }

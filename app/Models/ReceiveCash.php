@@ -29,8 +29,15 @@ class ReceiveCash extends Model
         // while creating order make order number take next available number
         static::creating(function (ReceiveCash $receiveCash) {
             //20230001 - 20230002
-            $receiveCash->receipt_number = ReceiveCash::getNextOrderNumber();
+            $receipt_number = ReceiveCash::where('receipt_number',ReceiveCash::getNextOrderNumber())
+            ->where('deleted_at','<>',null)->first();
+            if (!$receipt_number){
+                $receiveCash->receipt_number = ReceiveCash::getNextOrderNumber() + 1;
+            }else {
+                $receiveCash->receipt_number = ReceiveCash::getNextOrderNumber() ;
+            }
             $receiveCash->user_id = Auth::user()->id;
+
         });
     }
 
