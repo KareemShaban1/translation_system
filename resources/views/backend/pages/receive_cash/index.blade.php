@@ -44,10 +44,10 @@
                                 <td>{{ $today_reminder->receiveCash->id }}</td>
                                 <td>باقى الطلب رقم {{ $today_reminder->receiveCash->receipt_number }} </td>
                                 <td>{{ $today_reminder->receive_cash_reminder_date }}</td>
-                                <td>{{ $today_reminder->receiveCash->client->name }}</td>
-                                <td>{{ $today_reminder->receiveCash->service_price }}</td>
-                                <td>{{ $today_reminder->paid_amount }}</td>
-                                <td>{{ $today_reminder->remaining_amount }}</td>
+                                <td>{{ $today_reminder->receiveCash->client->name }} </td>
+                                <td>{{ $today_reminder->receiveCash->service_price }} جنية</td>
+                                <td>{{ $today_reminder->paid_amount }} جنية</td>
+                                <td>{{ $today_reminder->remaining_amount }} جنية</td>
                                 <td> - </td>
                                 <td> لا توجد </td>
                             </tr>
@@ -82,12 +82,12 @@
                                 <td>
                                     @if ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount != 0))
                                         <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
                                     @elseif ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount > 0))
                                         <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
                                     @elseif ($cash->remaining_amount > 0 && !isset($reminder))
                                         <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
                                             class="btn btn-success">
@@ -96,7 +96,7 @@
                                         تم الدفع
                                     @endif
                                 </td>
-                                <td>
+                                <td style="padding: 5px">
                                     @can('receive-edit')
                                         <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -117,7 +117,6 @@
                                     <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
                                         <i class="fa-solid fa-print"></i>
                                     </a>
-                                    {{-- <button id="printButton" class="btn btn-primary">طباعة</button> --}}
 
 
                                     <a class="btn btn-success"
@@ -126,7 +125,20 @@
                                 </td>
                             </tr>
                         @endforeach
+
+
                     </tbody>
+
+                    <tfoot>
+                        <td>
+                            الأجمالى
+                        </td>
+                        <td colspan="8" style="text-align: center">
+                            {{ $receiveCash->sum('paid_amount') + $today_reminder->sum('paid_amount') }}
+                            جنية
+                        </td>
+
+                    </tfoot>
                 </table>
             </div>
         </div>

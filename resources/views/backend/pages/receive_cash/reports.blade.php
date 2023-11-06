@@ -169,7 +169,7 @@
                                         تم الدفع
                                     @endif
                                 </td>
-                                <td>
+                                <td style="padding: 5px">
                                     @can('receive-edit')
                                         <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">
                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -198,6 +198,16 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <td>
+                            الأجمالى
+                        </td>
+                        <td colspan="8" style="text-align: center" id="totalAmount">
+                            {{ $receiveCash->sum('paid_amount') + $today_reminder->sum('paid_amount') }}
+                            جنية
+                        </td>
+
+                    </tfoot>
                 </table>
 
 
@@ -225,7 +235,7 @@
             // Function to update the total amount
             function updateTotalAmount() {
                 const totalAmount = datatable
-                    .column(6, {
+                    .column(5, {
                         search: 'applied'
                     })
                     .data()
