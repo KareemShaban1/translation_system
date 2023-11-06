@@ -38,7 +38,7 @@
                     </div>
 
                 </div>
-
+                {{-- 
                 <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -64,7 +64,6 @@
                                 <td>{{ $cash->paid_amount }}</td>
                                 <td>
                                     <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
-                                    {{-- <a href="{{ route('receive_cashs.delete', $receive_cash->id) }}" class="btn btn-danger">حذف</a> --}}
                                     <form action="{{ route('receive_cash.delete', $cash->id) }}" method="post"
                                         style="display:inline">
                                         @csrf
@@ -89,7 +88,119 @@
                         </tr>
                     </tfoot>
                     </tbody>
+                </table> --}}
+
+
+                <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
+                    <thead>
+                        <tr style="text-align: center">
+                            <th> Id </th>
+                            <th> رقم الإيصال </th>
+                            <th>تاريخ أستلام النقدية </th>
+                            <th>أسم العميل </th>
+                            <th> سعر الخدمة </th>
+                            <th> المبلغ المدفوع </th>
+                            <th> المبلغ الباقى </th>
+                            <th>أضافة باقى</th>
+                            <th>العمليات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+
+                            $today_reminder = App\Models\ReceiveCashReminder::whereDate('receive_cash_reminder_date', Carbon\Carbon::today())
+                                ->latest()
+                                ->first();
+                        @endphp
+                        @if ($today_reminder)
+                            <tr>
+                                <td>{{ $today_reminder->receiveCash->id }}</td>
+                                <td>باقى الطلب رقم {{ $today_reminder->receiveCash->receipt_number }} </td>
+                                <td>{{ $today_reminder->receive_cash_reminder_date }}</td>
+                                <td>{{ $today_reminder->receiveCash->client->name }}</td>
+                                <td>{{ $today_reminder->receiveCash->service_price }}</td>
+                                <td>{{ $today_reminder->paid_amount }}</td>
+                                <td>{{ $today_reminder->remaining_amount }}</td>
+                                <td> - </td>
+                                <td> لا توجد </td>
+                            </tr>
+                        @endif
+
+                        @foreach ($receiveCash as $cash)
+                            @php
+                                $reminder = App\Models\ReceiveCashReminder::where('receive_cash_id', $cash->id)
+                                    ->latest()
+                                    ->first();
+                            @endphp
+
+
+
+                            <tr>
+                                <td>{{ $cash->id }}</td>
+                                <td>{{ $cash->receipt_number }}</td>
+                                <td>{{ $cash->receive_date }}</td>
+                                {{-- <td>{{ $cash->user->name }}</td> --}}
+                                <td>{{ $cash->client->name }}</td>
+                                <td>{{ $cash->service_price }} جنية</td>
+                                <td>{{ $cash->paid_amount }} جنية</td>
+                                <td>{{ $cash->remaining_amount }} جنية
+                                    @isset($reminder)
+                                        @if ($reminder->remaining_amount == 0)
+                                            <div>
+                                                (تم الدفع بالكامل)
+                                            </div>
+                                        @endif
+                                    @endisset
+                                </td>
+                                <td>
+                                    @if ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount != 0))
+                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
+                                    @elseif ($cash->remaining_amount > 0 && (isset($reminder) && $reminder->remaining_amount > 0))
+                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
+                                    @elseif ($cash->remaining_amount > 0 && !isset($reminder))
+                                        <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
+                                    @else
+                                        تم الدفع
+                                    @endif
+                                </td>
+                                <td>
+                                    @can('receive-edit')
+                                        <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    @endcan
+
+                                    @can('receive-delete')
+                                        <form action="{{ route('receive_cash.delete', $cash->id) }}" method="post"
+                                            style="display:inline">
+                                            @csrf
+                                            @method('delete')
+
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    @endcan
+                                    <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
+                                        <i class="fa-solid fa-print"></i>
+                                    </a>
+
+                                    <a class="btn btn-success"
+                                        href="{{ route('receive_cash_reminder.show_reminders', $cash->id) }}">
+                                        <i class="fa-solid fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
+
+
             </div>
         </div>
     </div>
