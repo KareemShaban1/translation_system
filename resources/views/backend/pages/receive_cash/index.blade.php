@@ -34,12 +34,35 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+
+                            $today_reminder = App\Models\ReceiveCashReminder::whereDate('receive_cash_reminder_date', Carbon\Carbon::today())
+                                ->latest()
+                                ->first();
+                        @endphp
+                        @if ($today_reminder)
+                            <tr>
+                                <td>{{ $today_reminder->receiveCash->id }}</td>
+                                <td>باقى الطلب رقم {{ $today_reminder->receiveCash->receipt_number }} </td>
+                                <td>{{ $today_reminder->receive_cash_reminder_date }}</td>
+                                <td>{{ $today_reminder->receiveCash->client->name }}</td>
+                                <td>{{ $today_reminder->receiveCash->service_price }}</td>
+                                <td>{{ $today_reminder->paid_amount }}</td>
+                                <td>{{ $today_reminder->remaining_amount }}</td>
+                                <td> - </td>
+                                <td> لا توجد </td>
+                            </tr>
+                        @endif
+
                         @foreach ($receiveCash as $cash)
                             @php
                                 $reminder = App\Models\ReceiveCashReminder::where('receive_cash_id', $cash->id)
                                     ->latest()
                                     ->first();
                             @endphp
+
+
+
                             <tr>
                                 <td>{{ $cash->id }}</td>
                                 <td>{{ $cash->receipt_number }}</td>
@@ -68,15 +91,17 @@
                                             باقى</a>
                                     @elseif ($cash->remaining_amount > 0 && !isset($reminder))
                                         <a href="{{ route('receive_cash_reminder.create', $cash->id) }}"
-                                            class="btn btn-success">أضافة
-                                            باقى</a>
+                                            class="btn btn-success">
+                                            <i class="fa-solid fa-plus"></i></a>
                                     @else
                                         تم الدفع
                                     @endif
                                 </td>
                                 <td>
                                     @can('receive-edit')
-                                        <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">تعديل</a>
+                                        <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
                                     @endcan
 
                                     @can('receive-delete')
@@ -86,19 +111,19 @@
                                             @method('delete')
 
                                             <button type="submit" class="btn btn-danger">
-                                                حذف
+                                                <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </form>
                                     @endcan
                                     <a href="{{ route('receive_cash.pdfReport', $cash->id) }}" class="btn btn-primary">
-                                        طباعة
+                                        <i class="fa-solid fa-print"></i>
                                     </a>
                                     {{-- <button id="printButton" class="btn btn-primary">طباعة</button> --}}
 
 
                                     <a class="btn btn-success"
-                                        href="{{ route('receive_cash_reminder.show_reminders', $cash->id) }}">عرض سجلات
-                                        الدفع</a>
+                                        href="{{ route('receive_cash_reminder.show_reminders', $cash->id) }}">
+                                        <i class="fa-solid fa-eye"></i></a>
                                 </td>
                             </tr>
                         @endforeach

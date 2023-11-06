@@ -8,6 +8,7 @@ use App\Models\ReceiveCash;
 use App\Models\Service;
 use App\Models\ServiceProviders;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
@@ -21,7 +22,7 @@ class ReceiveCashController extends Controller
     public function index()
     {
         //
-        $receiveCash = ReceiveCash::with('user','client','service_provider','service')->get();
+        $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->with('user','client','service_provider','service')->get();
         return view('backend.pages.receive_cash.index',compact('receiveCash'));
     }
 
