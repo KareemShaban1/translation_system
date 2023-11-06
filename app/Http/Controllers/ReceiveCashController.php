@@ -22,7 +22,8 @@ class ReceiveCashController extends Controller
     public function index()
     {
         //
-        $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->with('user','client','service_provider','service')->get();
+        $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->
+        with('user','client','service_provider','service')->latest()->get();
         return view('backend.pages.receive_cash.index',compact('receiveCash'));
     }
 
