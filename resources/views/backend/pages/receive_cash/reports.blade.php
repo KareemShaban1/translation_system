@@ -203,10 +203,10 @@
                             الأجمالى
                         </td>
                         <td colspan="8" style="text-align: center" id="totalAmount">
-                            {{ $receiveCash->sum('paid_amount') + $today_reminder->sum('paid_amount') }}
+                            {{ ($receiveCash ? $receiveCash->sum('paid_amount') : 0) +
+                                ($today_reminder ? $today_reminder->sum('paid_amount') : 0) }}
                             جنية
                         </td>
-
                     </tfoot>
                 </table>
 
