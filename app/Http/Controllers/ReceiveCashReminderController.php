@@ -15,7 +15,7 @@ class ReceiveCashReminderController extends Controller
         
         $receive_cash_reminders = ReceiveCashReminder::all();
 
-        return view('backend.pages.receive_cash_reminder.index',compact('receive_cash_reminders'));
+        return view('backend2.pages.receive_cash_reminder.index',compact('receive_cash_reminders'));
 
     }
 
@@ -23,7 +23,7 @@ class ReceiveCashReminderController extends Controller
         
         $receive_cash_reminder = ReceiveCashReminder::where('receive_cash_id',$id)->get();
 
-        return view('backend.pages.receive_cash_reminder.show',compact('receive_cash_reminder'));
+        return view('backend2.pages.receive_cash_reminder.show',compact('receive_cash_reminder'));
 
     }
 
@@ -33,7 +33,7 @@ class ReceiveCashReminderController extends Controller
         
         $receive_cash = ReceiveCash::findOrFail($id); 
 
-        return view('backend.pages.receive_cash_reminder.create',compact('receive_cash'));
+        return view('backend2.pages.receive_cash_reminder.create',compact('receive_cash'));
     }
 
     public function store(Request $request){
@@ -58,7 +58,7 @@ class ReceiveCashReminderController extends Controller
             'reminder'=>$reminder
         ];
         
-        $pdf =  PDF::loadView('backend.pages.receive_cash_reminder.pdf_report',$data);
+        $pdf =  PDF::loadView('backend2.pages.receive_cash_reminder.pdf_report',$data);
         return $pdf->stream('Report.pdf');
     }
 

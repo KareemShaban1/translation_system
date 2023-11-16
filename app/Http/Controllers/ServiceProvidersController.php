@@ -19,7 +19,7 @@ class ServiceProvidersController extends Controller
         //
         $service_providers = ServiceProviders::all();
 
-        return view('backend.pages.service_providers.index',compact('service_providers'));
+        return view('backend2.pages.service_providers.index',compact('service_providers'));
     }
 
     /**
@@ -29,7 +29,7 @@ class ServiceProvidersController extends Controller
     {
         //
         $expense_types = ExpenseType::all();
-        return view('backend.pages.service_providers.create',compact('expense_types'));
+        return view('backend2.pages.service_providers.create',compact('expense_types'));
 
     }
 
@@ -73,7 +73,7 @@ class ServiceProvidersController extends Controller
         $serviceProvider = ServiceProviders::findOrFail($id);
         $expense_types = ExpenseType::all();
 
-        return view('backend.pages.service_providers.edit',compact('expense_types','serviceProvider'));
+        return view('backend2.pages.service_providers.edit',compact('expense_types','serviceProvider'));
 
     }
 
@@ -119,7 +119,7 @@ class ServiceProvidersController extends Controller
             'receiveCash'=>$receiveCash
         ];
 
-        $pdf =  PDF::loadView('backend.pages.service_providers.service_provider_report',$data);
+        $pdf =  PDF::loadView('backend2.pages.service_providers.service_provider_report',$data);
         return $pdf->stream('Report.pdf');
         
     }

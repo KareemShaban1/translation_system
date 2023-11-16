@@ -26,20 +26,39 @@ class CashOut extends Model
     {
 
         // while creating order make order number take next available number
-        static::creating(function (CashOut $cashOut) {
-            //20230001 - 20230002
+        // static::creating(function (CashOut $cashOut) {
+        //     //20230001 - 20230002
 
-            $cashOut = CashOut::where('receipt_number',ReceiveCash::getNextOrderNumber())
-            ->where('deleted_at','<>',null)->first();
-            if(!$cashOut){
-                $cashOut->receipt_number = CashOut::getNextOrderNumber() + 1;
-
-            }else {
-                
-                $cashOut->receipt_number = CashOut::getNextOrderNumber();
-
-            }
+        //     $deleted_cashOut = CashOut::where('receipt_number',ReceiveCash::getNextOrderNumber())
+        //     ->where('deleted_at','<>',null)->first();
             
+            
+        //     if(!$deleted_cashOut){
+        //         $cashOut->receipt_number = CashOut::getNextOrderNumber() + 1;
+        //     }else {
+                
+        //         $deleted_cashOut->receipt_number = CashOut::getNextOrderNumber();
+
+        //     }
+            
+        //     $cashOut->user_id = Auth::user()->id;
+        // });
+        static::creating(function (CashOut $cashOut) {
+            // Check for the next available receipt_number
+            $nextReceiptNumber = ReceiveCash::getNextOrderNumber();
+        
+            // Find a CashOut with the given receipt_number (deleted or not)
+            $deletedCashOut = CashOut::where('receipt_number', $nextReceiptNumber)
+            ->where('deleted_at','<>',null)->first();
+        
+            // If an existing CashOut is found (deleted or not), increment the receipt_number
+            if ($deletedCashOut) {
+                $cashOut->receipt_number = $nextReceiptNumber + 1;
+            } else {
+                $cashOut->receipt_number = $nextReceiptNumber;
+            }
+        
+            // Set other properties
             $cashOut->user_id = Auth::user()->id;
         });
     }

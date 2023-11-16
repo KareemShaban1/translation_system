@@ -29,6 +29,10 @@ use Illuminate\Support\Facades\Route;
 //     return view('login');
 // });
 
+Route::get('/test', function () {
+    return view('backend2.empty');
+});
+
 Route::group([
     'middleware' => ['auth:web']
 ],function(){

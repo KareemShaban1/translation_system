@@ -18,7 +18,7 @@ class UsersController extends Controller
     {
         //
         $users = User::all();
-        return view('backend.pages.users.index',compact('users'));
+        return view('backend2.pages.users.index',compact('users'));
     }
 
     /**
@@ -28,7 +28,7 @@ class UsersController extends Controller
     {
         //
         $roles = Role::pluck('name','name')->all();
-        return view('backend.pages.users.create',compact('roles'));
+        return view('backend2.pages.users.create',compact('roles'));
 
     }
 
@@ -71,7 +71,7 @@ class UsersController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
-        return view('backend.pages.users.edit',compact('user','roles','userRole'));
+        return view('backend2.pages.users.edit',compact('user','roles','userRole'));
 
     }
 

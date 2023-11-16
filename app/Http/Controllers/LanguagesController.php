@@ -11,13 +11,13 @@ class LanguagesController extends Controller
     public function index(){
         $languages = Languages::all();
 
-        return view('backend.pages.languages.index',compact('languages'));
+        return view('backend2.pages.languages.index',compact('languages'));
     }
 
     public function create(){
 
 
-        return view('backend.pages.languages.create');
+        return view('backend2.pages.languages.create');
         
     }
 
@@ -38,7 +38,7 @@ class LanguagesController extends Controller
     public function edit($id){
         $language = Languages::findOrFail($id);
 
-        return view('backend.pages.languages.edit',compact('language'));
+        return view('backend2.pages.languages.edit',compact('language'));
     }
     public function update(Request $request , $id){
         $language = Languages::findOrFail($id);

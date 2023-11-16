@@ -10580,10 +10580,12 @@
           .sidebar .sidebar-heading {
             text-align: right;
           }
+          
           .sidebar.toggled {
             overflow: visible;
             width: 6.5rem !important;
           }
+
           .sidebar.toggled .nav-item .collapse {
             position: absolute;
             right: calc(6.5rem + 1.5rem / 2);
@@ -11301,4 +11303,10 @@
 
         .dataTables_filter input{
           margin-right: 10px;
+        }
+
+
+        /* custom */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+          padding: 0px;
         }

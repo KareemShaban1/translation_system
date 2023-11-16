@@ -16,7 +16,7 @@ class ServiceController extends Controller
     {
         //
         $services = Service::all();
-        return view('backend.pages.services.index',compact('services'));
+        return view('backend2.pages.services.index',compact('services'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ServiceController extends Controller
     public function create()
     {
         //
-        return view('backend.pages.services.create');
+        return view('backend2.pages.services.create');
 
     }
 
@@ -63,7 +63,7 @@ class ServiceController extends Controller
         //
         $service = Service::findOrFail($id);
 
-        return view('backend.pages.services.edit',compact('service'));
+        return view('backend2.pages.services.edit',compact('service'));
     }
 
     /**
@@ -103,7 +103,7 @@ class ServiceController extends Controller
             'receiveCash'=>$receiveCash
         ];
 
-        $pdf =  PDF::loadView('backend.pages.services.service_receive_cash',$data);
+        $pdf =  PDF::loadView('backend2.pages.services.service_receive_cash',$data);
         return $pdf->stream('Report.pdf');
         
     }

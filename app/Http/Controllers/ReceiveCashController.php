@@ -24,7 +24,7 @@ class ReceiveCashController extends Controller
         //
         $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->
         with('user','client','service_provider','service')->latest()->get();
-        return view('backend.pages.receive_cash.index',compact('receiveCash'));
+        return view('backend2.pages.receive_cash.index',compact('receiveCash'));
     }
 
 
@@ -32,7 +32,7 @@ class ReceiveCashController extends Controller
     {
         //
         $receiveCash = ReceiveCash::with('user','client','service_provider','service')->get();
-        return view('backend.pages.receive_cash.reports',compact('receiveCash'));
+        return view('backend2.pages.receive_cash.reports',compact('receiveCash'));
     }
 
     /**
@@ -46,7 +46,7 @@ class ReceiveCashController extends Controller
         $users = User::all();
         $clients = Client::all();
         $languages = Languages::all();
-        return view('backend.pages.receive_cash.create',
+        return view('backend2.pages.receive_cash.create',
         compact('services','service_providers','users','clients','languages'));
 
     }
@@ -100,7 +100,7 @@ class ReceiveCashController extends Controller
         $clients = Client::all();
         $languages = Languages::all();
 
-        return view('backend.pages.receive_cash.edit',
+        return view('backend2.pages.receive_cash.edit',
         compact('receiveCash','services','service_providers','users','clients','languages'));
 
     }
@@ -153,14 +153,14 @@ class ReceiveCashController extends Controller
             'receiveCash'=>$receiveCash
         ];
         
-        $pdf =  PDF::loadView('backend.pages.receive_cash.pdf_report',$data);
+        $pdf =  PDF::loadView('backend2.pages.receive_cash.pdf_report',$data);
         return $pdf->stream('Report.pdf');
     }
 
     // public function pdfReport($id){
     //     $receiveCash = ReceiveCash::findOrFail($id);
 
-    //     return view('backend.pages.receive_cash.pdf_report',compact('receiveCash'));
+    //     return view('backend2.pages.receive_cash.pdf_report',compact('receiveCash'));
 
         
     // }
@@ -171,9 +171,9 @@ class ReceiveCashController extends Controller
         // $data = [
         //     'receiveCash'=>$receiveCash
         // ];
-        return view('backend.pages.receive_cash.test',compact('receiveCash'));
+        return view('backend2.pages.receive_cash.test',compact('receiveCash'));
         
-        // $pdf =  PDF::loadView('backend.pages.receive_cash.pdf_report',$data);
+        // $pdf =  PDF::loadView('backend2.pages.receive_cash.pdf_report',$data);
         // return $pdf->stream('Report.pdf');
     }
 

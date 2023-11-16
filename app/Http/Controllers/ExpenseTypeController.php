@@ -15,7 +15,7 @@ class ExpenseTypeController extends Controller
         //
         $expense_types = ExpenseType::all();
 
-        return view('backend.pages.expense_type.index',compact('expense_types'));
+        return view('backend2.pages.expense_type.index',compact('expense_types'));
     }
 
     /**
@@ -24,7 +24,7 @@ class ExpenseTypeController extends Controller
     public function create()
     {
         //
-        return view('backend.pages.expense_type.create');
+        return view('backend2.pages.expense_type.create');
 
     }
 
@@ -58,7 +58,7 @@ class ExpenseTypeController extends Controller
         //
         $expense_type = ExpenseType::findOrFail($id);
 
-        return view('backend.pages.expense_type.edit',compact('expense_type'));
+        return view('backend2.pages.expense_type.edit',compact('expense_type'));
     }
 
     /**

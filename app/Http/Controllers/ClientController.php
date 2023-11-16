@@ -16,7 +16,7 @@ class ClientController extends Controller
     {
         //
         $clients = Client::all();
-        return view('backend.pages.clients.index',compact('clients'));
+        return view('backend2.pages.clients.index',compact('clients'));
     }
 
     /**
@@ -25,7 +25,7 @@ class ClientController extends Controller
     public function create()
     {
         //
-        return view('backend.pages.clients.create');
+        return view('backend2.pages.clients.create');
 
     }
 
@@ -64,7 +64,7 @@ class ClientController extends Controller
     {
         //
         $client = Client::findOrFail($id);
-        return view('backend.pages.clients.edit',compact('client'));
+        return view('backend2.pages.clients.edit',compact('client'));
 
     }
 
@@ -107,7 +107,7 @@ class ClientController extends Controller
             'receiveCash'=>$receiveCash
         ];
 
-        $pdf =  PDF::loadView('backend.pages.clients.client_report',$data);
+        $pdf =  PDF::loadView('backend2.pages.clients.client_report',$data);
         return $pdf->stream('Report.pdf');
         
     }

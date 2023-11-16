@@ -98,7 +98,7 @@
              aria-expanded="true" aria-controls="services">
              <i class="fas fa-fw fa-cog"></i>
              <span> الخدمات</span>
-         </a>
+         </a> 
          <div id="services" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
                  {{-- <h6 class="collapse-header">Custom Components:</h6> --}}

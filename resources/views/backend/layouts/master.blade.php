@@ -19,6 +19,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <link href="{{ asset('backend/datatables/jquery.dataTables.min.css') }}" rel="stylesheet">
+
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css"> --}}
     <!-- Custom styles for this template-->
     <!-- <link href="css/sb-admin-2.min.css" rel="stylesheet"> -->
     <link href="{{ asset('backend/css/rtl.css') }}" rel="stylesheet">
@@ -102,7 +105,9 @@
     <script src="{{ asset('backend/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset('backend/js/sb-admin-2.min.js') }}"></script>
+    {{-- <script src="{{ asset('backend/js/sb-admin-2.min.js') }}"></script> --}}
+    <script src="{{ asset('backend/js/sb-admin-2.js') }}"></script>
+
 
     <!-- Page level plugins -->
     <script src="{{ asset('backend/vendor/chart.js/Chart.min.js') }}"></script>
@@ -119,6 +124,8 @@
     <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script> --}}
 
     <script src="{{ asset('backend/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('backend/datatables/dataTables.responsive.min.js') }}"></script>
+
     <script src="{{ asset('backend/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('backend/datatables/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('backend/datatables/export-tables/dataTables.buttons.min.js') }}"></script>
@@ -128,8 +135,10 @@
     <script src="{{ asset('backend/datatables/export-tables/vfs_fonts.js') }}"></script>
     <script src="{{ asset('backend/datatables/export-tables/buttons.print.min.js') }}"></script>
 
+    
+   
     <!-- Page level custom scripts -->
-    <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>
+    {{-- <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script> --}}
 
     @stack('scripts')
 

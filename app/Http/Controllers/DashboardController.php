@@ -30,7 +30,7 @@ class DashboardController extends Controller
         ->groupBy(DB::raw('MONTH(date)'))
         ->get();
         // dd( $receive_cash_monthly);
-    return view('backend.pages.dashboard.index',
+    return view('backend2.pages.dashboard.index',
     compact('users_count','clients_count','service_providers_count', 'receive_cash_monthly',
     'cash_out_monthly',
     'services_count','receive_cash_count','cash_out_count','expense_items_count'));

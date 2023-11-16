@@ -1,10 +1,20 @@
 @extends('backend.layouts.master')
 
 @push('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.1/css/dataTables.dateTime.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+
+    <style>
+        th {
+            font-size: 0.9rem;
+            text-align: right
+        }
+    </style>
 @endpush
+
 
 
 @section('content')
@@ -13,12 +23,13 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary"> أستلام نقدية اليوم</h6>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
 
 
 
-                <table class="table table-bordered" id="custom_table" width="100%" cellspacing="0">
+                <table class="table table-hover table-sm p-0" id="custom_table">
                     <thead>
                         <tr style="text-align: center">
                             <th> Id </th>
@@ -148,9 +159,13 @@
 
 
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script>
         var datatable = $('#custom_table').DataTable({
             stateSave: true,
+
             oLanguage: {
                 sSearch: 'البحث',
                 sInfo: "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
@@ -163,31 +178,58 @@
                     sPrevious: "السابق"
                 },
             },
-            sortable: true,
-            dom: 'Bfrtip',
-            buttons: [{
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, ':visible']
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    },
-                    title: "أستلام نقدية"
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4]
-                    },
-                    title: "أستلام نقدية"
-                },
+            // sortable: true,
+            // dom: 'Bfrtip',
+            // buttons: [
+            //     'copy', 'excel', 'pdf'
+            // ]
+            // buttons: [{
+            //         extend: 'copyHtml5',
+            //         exportOptions: {
+            //             columns: [0, ':visible']
+            //         }
+            //     },
+            //     {
+            //         extend: 'excelHtml5',
+            //         exportOptions: {
+            //             columns: [0, 1, 2, 3, 4]
+            //         },
+            //         title: "أستلام نقدية"
+            //     },
+            //     {
+            //         extend: 'print',
+            //         exportOptions: {
+            //             columns: [0, 1, 2, 3, 4]
+            //         },
+            //         title: "أستلام نقدية"
+            //     },
 
-                'colvis'
-            ]
+            //     'colvis'
+            // ],
+            responsive: true, // Enable responsiveness
+            scrollX: true, // Enable horizontal scrolling on small devices
+            // responsive: true,
+            // columnDefs: [
+
+            //     {
+            //         responsivePriority: 1,
+            //         targets: 1
+            //     },
+            //     {
+            //         responsivePriority: 2,
+            //         targets: 5
+            //     },
+            //     {
+            //         responsivePriority: 3,
+            //         targets: 6
+            //     },
+            //     {
+            //         responsivePriority: 4,
+            //         targets: 10
+            //     },
+
+            //     // Add more columnDefs for other columns, if needed
+            // ],
         });
     </script>
 

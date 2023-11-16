@@ -21,7 +21,7 @@ class CashOutController extends Controller
     {
         //
         $cashOut = CashOut::with('user','client','service_provider','service')->get();
-        return view('backend.pages.cash_out.index',compact('cashOut'));
+        return view('backend2.pages.cash_out.index',compact('cashOut'));
 
     }
 
@@ -29,7 +29,7 @@ class CashOutController extends Controller
     {
         //
         $cashOut = CashOut::with('user','client','service_provider','service')->get();
-        return view('backend.pages.cash_out.reports',compact('cashOut'));
+        return view('backend2.pages.cash_out.reports',compact('cashOut'));
 
     }
 
@@ -44,7 +44,7 @@ class CashOutController extends Controller
         $users = User::all();
         $clients = Client::all();
         $expense_type = ExpenseType::all();
-        return view('backend.pages.cash_out.create',
+        return view('backend2.pages.cash_out.create',
         compact('services','service_providers','users','clients','expense_type'));
         
     }
@@ -93,7 +93,7 @@ class CashOutController extends Controller
         $users = User::all();
         $clients = Client::all();
         $expense_type = ExpenseType::all();
-        return view('backend.pages.cash_out.edit',
+        return view('backend2.pages.cash_out.edit',
         compact('cashOut','services','service_providers','users','clients','expense_type'));
     }
 
@@ -144,7 +144,7 @@ class CashOutController extends Controller
             'cashOut'=>$cashOut
         ];
         
-        $pdf =  PDF::loadView('backend.pages.cash_out.pdf_report',$data);
+        $pdf =  PDF::loadView('backend2.pages.cash_out.pdf_report',$data);
         return $pdf->stream('Report.pdf');
     }
 
