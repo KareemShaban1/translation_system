@@ -34,20 +34,11 @@
 
                 <div class="row">
 
-                    {{-- <div class="form-group col-md-4">
-                <label for="expense">المصروف</label>
-                <select class="form-control" id="expense" value="{{ $cashOut->expense }}" name="expense">
-                    <option value="rent">أيجار</option>
-                    <option value="salary">مرتب</option>
-                </select>
-                @error('expense')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div> --}}
+
 
                     <div class="form-group col-md-4">
                         <label for="expense_type_id">نوع المصروف</label>
-                        <select class="form-control" id="expense_type_id" name="expense_type_id">
+                        <select class="custom-select mr-sm-2" id="expense_type_id" name="expense_type_id">
                             <option value="" readonly>أختار من القائمة</option>
                             @foreach ($expense_type as $type)
                                 <option value="{{ $type->id }}" @selected($cashOut->expense_type_id == $type->id)>{{ $type->name }}
@@ -61,7 +52,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="recipient">نوع المستلم</label>
-                        <select class="form-control" id="recipient" name="recipient">
+                        <select class="custom-select mr-sm-2" id="recipient" name="recipient">
                             <option value="" readonly>أختار من القائمة</option>
                             <option value="client" @selected($cashOut->recipient == 'client')>عميل</option>
                             <option value="service_provider" @selected($cashOut->recipient == 'service_provider')>مقدم خدمة</option>
@@ -79,7 +70,7 @@
 
                     <div class="form-group col-md-4" id="user_div">
                         <label for="user_id">المستخدم</label>
-                        <select class="form-control" id="user_id" name="user_id">
+                        <select class="custom-select mr-sm-2" id="user_id" name="user_id">
                             <option value="" readonly>أختار من القائمة</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}" @selected($cashOut->user_id == $user->id)>{{ $user->name }}
@@ -93,7 +84,7 @@
 
                     <div class="form-group col-md-4" id="client_div">
                         <label for="client_id">العميل</label>
-                        <select class="form-control" id="client_id" name="client_id">
+                        <select class="custom-select mr-sm-2" id="client_id" name="client_id">
                             <option value="" readonly>أختار من القائمة</option>
 
                             @foreach ($clients as $client)
@@ -114,7 +105,7 @@
                 <div class="row" id="service_provider_div">
                     <div class="form-group col-md-6">
                         <label for="service_provider_id">مقدم الخدمة</label>
-                        <select class="form-control" id="service_provider_id" name="service_provider_id">
+                        <select class="custom-select mr-sm-2" id="service_provider_id" name="service_provider_id">
                             <option value="" readonly>أختار من القائمة</option>
                             @foreach ($service_providers as $provider)
                                 <option value="{{ $provider->id }}" @selected($cashOut->service_provider_id == $provider->id)>{{ $provider->name }}
@@ -128,7 +119,7 @@
 
                     {{-- <div class="form-group col-md-6">
                 <label for="service_id">الخدمة</label>
-                <select class="form-control" id="service_id" name="service_id">
+                <select class="custom-select mr-sm-2" id="service_id" name="service_id">
                     <option value="" readonly>أختار من القائمة</option>
                     @foreach ($services as $service)
                         <option value="{{ $service->id }}" @selected($cashOut->service_id == $service->id)>{{ $service->name }}</option>

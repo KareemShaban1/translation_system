@@ -28,7 +28,7 @@
                         <label for="service_id">
                             {{-- الخدمة --}}
                         </label>
-                        <select class="form-control" id="service_id" name="service_id">
+                        <select class="custom-select mr-sm-2" id="service_id" name="service_id">
 
                             @foreach ($services as $service)
                                 <option value="" readonly>أختار من الخدمات</option>
@@ -59,7 +59,7 @@
                             <label for="from_lang_id">
                                 من لغة
                             </label>
-                            <select class="form-control" id="from_lang_id" name="from_lang_id">
+                            <select class="custom-select mr-sm-2" id="from_lang_id" name="from_lang_id">
                                 <option value="" readonly>أختار من اللغات</option>
                                 @foreach ($languages as $language)
                                     <option value="{{ $language->id }}" @selected($receiveCash->from_lang_id == $language->id)>{{ $language->name }}
@@ -74,7 +74,7 @@
                             <label for="to_lang_id">
                                 إلى لغة
                             </label>
-                            <select class="form-control" id="to_lang_id" name="to_lang_id">
+                            <select class="custom-select mr-sm-2" id="to_lang_id" name="to_lang_id">
                                 <option value="" readonly>أختار من اللغات</option>
                                 @foreach ($languages as $language)
                                     <option value="{{ $language->id }}" @selected($receiveCash->to_lang_id == $language->id)>{{ $language->name }}
@@ -96,7 +96,7 @@
                         <label for="client_id">
                             {{-- العميل --}}
                         </label>
-                        <select class="form-control" id="client_id" name="client_id">
+                        <select class="custom-select mr-sm-2" id="client_id" name="client_id">
                             @foreach ($clients as $client)
                                 <option value="" readonly>أختار من العملاء</option>
                                 <option value="{{ $client->id }}" @selected($receiveCash->client_id == $client->id)>{{ $client->name }}
@@ -113,7 +113,7 @@
                         <label for="service_provider_id">
                             {{-- مقدم الخدمة --}}
                         </label>
-                        <select class="form-control" id="service_provider_id" name="service_provider_id">
+                        <select class="custom-select mr-sm-2" id="service_provider_id" name="service_provider_id">
                             @foreach ($service_providers as $provider)
                                 <option value="" readonly>أختار من مقدمى الخدمات</option>
 

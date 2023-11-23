@@ -30,7 +30,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="expense_type_id">نوع المصروف</label>
-                        <select class="form-control" id="expense_type_id" name="expense_type_id">
+                        <select class="custom-select mr-sm-2" id="expense_type_id" name="expense_type_id">
                             <option value="" readonly>أختار من القائمة</option>
                             @foreach ($expense_type as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -47,7 +47,7 @@
                 <div class="row" id="service_provider_div">
                     <div class="form-group col-md-6">
                         <label for="service_provider_id">مقدم الخدمة</label>
-                        <select class="form-control" id="service_provider_id" name="service_provider_id">
+                        <select class="custom-select mr-sm-2" id="service_provider_id" name="service_provider_id">
                             {{-- <option value="" readonly>أختار من القائمة</option>
                             @foreach ($service_providers as $provider)
                                 <option value="{{ $provider->id }}">{{ $provider->name }}</option>

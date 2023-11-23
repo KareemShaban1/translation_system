@@ -70,7 +70,7 @@
                         <label for="expense_type_id">
                             {{-- نوع المصروف  --}}
                         </label>
-                        <select class="form-control" id="expense_type_id" name="expense_type_id">
+                        <select class="custom-select mr-sm-2" id="expense_type_id" name="expense_type_id">
                             <option value="" readonly>أختار من نوع المصروف</option>
                             @foreach ($expense_types as $expense_type)
                                 <option value="{{ $expense_type->id }}" @selected($serviceProvider->expense_type_id == $expense_type->id)>
