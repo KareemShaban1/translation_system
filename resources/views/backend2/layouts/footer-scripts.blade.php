@@ -34,9 +34,37 @@
 <!-- custom -->
 <script src="{{ URL::asset('backend2/assets/js/custom.js') }}"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 {{-- Datatables --}}
 {{-- <script src="{{ URL::asset('backend2/assets/datatables/datatables.min.js') }}"></script> --}}
 
+<!-- Include Toastr CSS and JS via CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+{{-- <script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var message = '{{ session('message') }}';
+    //     var type = '{{ session('type') }}';
+
+    //     if (message) {
+    //         showToast(message, type);
+    //     }
+    // });
+</script> --}}
+<script>
+    @if (session('toast_success'))
+        toastr.success("{{ session('toast_success') }}", "", {
+            "timeOut": 1000
+        }); // Set timeOut to 1000 milliseconds (1 second)
+    @endif
+    @if (session('toast_error'))
+        toastr.error("{{ session('toast_error') }}", "", {
+            "timeOut": 1000
+        }); // Set timeOut to 1000 milliseconds (1 second)
+    @endif
+</script>
 
 <script src="{{ asset('backend2/assets/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('backend2/assets/datatables/dataTables.responsive.min.js') }}"></script>

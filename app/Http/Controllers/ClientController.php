@@ -96,7 +96,20 @@ class ClientController extends Controller
     {
         //
         $client = Client::findOrFail($id);
-        $client->delete();
+        // Check if there are associated ReceiveCash records
+        $receiveCash = ReceiveCash::where('client_id', $client->id)->exists();
+
+        if ($receiveCash) {
+           
+            return back()->with('toast_error',"لا يمكن حذف العميل");
+
+        } else {
+            // If no associated records, delete the client
+            $client->delete();
+
+            return back()->with('toast_success',"تم حذف العميل");
+        }
+        
         return redirect()->route('clients.index');
 
     }
