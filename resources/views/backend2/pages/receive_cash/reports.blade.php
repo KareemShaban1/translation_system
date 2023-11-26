@@ -131,6 +131,7 @@
                                 $reminder = App\Models\ReceiveCashReminder::where('receive_cash_id', $cash->id)
                                     ->latest()
                                     ->first();
+                                // dd($cash);
                             @endphp
 
 
@@ -247,6 +248,48 @@
             }
 
             // Initialize DataTable with your custom options
+            // var datatable = $('#custom_table').DataTable({
+            //     stateSave: true,
+            //     responsive: true,
+            //     // oLanguage: {
+            //     //     sSearch: 'البحث',
+            //     //     sInfo: "Got a total of _TOTAL_ entries to show (_START_ to _END_)",
+            //     //     sZeroRecords: 'لا يوجد سجل متتطابق',
+            //     //     sEmptyTable: 'لا يوجد بيانات في الجدول',
+            //     //     oPaginate: {
+            //     //         sFirst: "First",
+            //     //         sLast: "الأخير",
+            //     //         sNext: "التالى",
+            //     //         sPrevious: "السابق"
+            //     //     },
+            //     // },
+            //     // sortable: true,
+            //     dom: 'Bfrtip',
+            //     buttons: [{
+            //             extend: 'copyHtml5',
+            //             exportOptions: {
+            //                 columns: [0, ':visible']
+            //             }
+            //         },
+            //         {
+            //             extend: 'excelHtml5',
+            //             exportOptions: {
+            //                 columns: [0, 1, 2, 3, 4]
+            //             },
+            //             title: "أستلام نقدية"
+            //         },
+            //         {
+            //             extend: 'print',
+            //             exportOptions: {
+            //                 columns: [0, 1, 2, 3, 4]
+            //             },
+            //             title: "أستلام نقدية"
+            //         },
+
+            //         'colvis'
+            //     ]
+            // });
+
             var datatable = $('#custom_table').DataTable({
                 stateSave: true,
                 responsive: true,
@@ -262,7 +305,8 @@
                         sPrevious: "السابق"
                     },
                 },
-                sortable: true,
+                // sortable: true,
+                ordering: false,
                 dom: 'Bfrtip',
                 buttons: [{
                         extend: 'copyHtml5',

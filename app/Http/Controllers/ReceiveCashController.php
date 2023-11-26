@@ -31,7 +31,10 @@ class ReceiveCashController extends Controller
     public function reports()
     {
         //
-        $receiveCash = ReceiveCash::with('user','client','service_provider','service')->get();
+        $receiveCash = ReceiveCash::with('user','client','service_provider','service')
+        ->latest('created_at') // Order by created_at column in descending order
+        ->get();
+        
         return view('backend2.pages.receive_cash.reports',compact('receiveCash'));
     }
 
