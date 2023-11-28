@@ -63,24 +63,7 @@
         $(document).ready(function() {
 
 
-            window.pdfMake.vfs = pdfMake.vfs;
-
-            pdfMake.fonts = {
-
-                XBRiyaz: {
-                    normal: 'https://clinic.kareemsoft.online/public/backend/assets/fonts/Almarai-Regular.ttf',
-                    bold: 'https://clinic.kareemsoft.online/backend/fonts/Almarai-Bold.ttf',
-                    italics: 'http://127.0.0.1:8000/backend/fonts/Almarai-Regular.ttf',
-                    bolditalics: 'http://127.0.0.1:8000/backend/fonts/Almarai-Regular.ttf'
-                },
-                Roboto: {
-                    normal: 'https://clinic.kareemsoft.online/backend/assets/fonts/Almarai-Regular.ttf',
-                    bold: 'Roboto-Medium.ttf',
-                    italics: 'Roboto-Italic.ttf',
-                    bolditalics: 'Roboto-MediumItalic.ttf'
-                }
-
-            }
+        
 
             var datatable = $('#custom_table').DataTable({
                 stateSave: true,

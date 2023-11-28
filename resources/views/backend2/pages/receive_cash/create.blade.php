@@ -6,6 +6,32 @@
             border: 2px groove;
 
         }
+
+        .ui-autocomplete {
+            z-index: 1050;
+            width: 220px;
+            list-style: none
+        }
+
+        .client-suggestion {
+            display: flex;
+            /* Use flexbox to arrange image and name in a row */
+            flex-direction: row;
+            /* Ensure a horizontal layout */
+            align-items: center;
+            /* Vertically center items within the suggestion container */
+            padding: 5px;
+            /* Add padding for spacing */
+            border-bottom: 1px solid #ccc;
+            /* Add a border between suggestions */
+            /* z-index: 999; */
+            background-color: rgb(111, 111, 111);
+            color: white;
+        }
+
+        .client-name {
+            color: rgb(255, 255, 255)
+        }
     </style>
 @endpush
 
@@ -103,15 +129,19 @@
 
                     <div class="form-group col-md-6" id="client_div" style="margin-top: 15px">
                         <label for="client_id">
-                            {{-- العميل --}}
+                            العميل
                         </label>
-                        <select class="custom-select mr-sm-2" id="client_id" name="client_id">
+                        {{-- <select class="custom-select mr-sm-2" id="client_id" name="client_id">
                             <option value="" readonly>أختار من العملاء</option>
 
                             @foreach ($clients as $client)
                                 <option value="{{ $client->id }}">{{ $client->name }}</option>
                             @endforeach
-                        </select>
+                        </select> --}}
+                        <div class="search-input">
+                            <input type="text" name="search" id="search" class="form-control" placeholder="بحث">
+                            <input type="text" name="client_id" id="client_id" hidden>
+                        </div>
                         @error('client_id')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -200,5 +230,74 @@
 
             remainingAmountInput.value = remainingAmount;
         }
+    </script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $.noConflict();
+        jQuery(document).ready(function($) {
+
+            $("#search").autocomplete({
+                source: function(request, response) {
+                    // Send an AJAX request to fetch matching product data
+                    $.ajax({
+                        url: "{{ route('clients.autocomplete') }}", // Replace with the actual route
+                        dataType: "json",
+                        data: {
+                            term: request.term,
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            var mappedData = $.map(data, function(item) {
+                                // Create a custom HTML element for each suggestion
+                                var suggestionHtml =
+                                    '<div class="client-suggestion">' +
+                                    '<div class="client-name">' + item.name +
+                                    '</div>' +
+                                    '</div>';
+                                // console.log(suggestionHtml);
+                                return {
+                                    label: item
+                                        .name, // Displayed in the autocomplete dropdown
+                                    value: item
+                                        .id, // Value placed in the input field when selected
+                                    html: suggestionHtml, // Custom HTML for the suggestion
+                                };
+                            });
+                            console.log(mappedData);
+                            // Display autocomplete suggestions with custom HTML
+                            response(mappedData);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX Error:", textStatus, errorThrown);
+                            // Handle the error here, e.g., display an error message
+                            response(
+                                []
+                            ); // Return an empty array to prevent autocomplete dropdown
+                        },
+
+                    });
+                },
+                minLength: 1,
+                position: {
+                    my: "right+15 top",
+                    at: "right bottom",
+                },
+                width: 100, // Adjust the width as needed
+                autoFill: true,
+                select: function(event, ui) {
+                    $("#client_id").val(ui.item.value);
+                    $("#search").val(ui.item.label);
+                    return false;
+                }
+
+            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+                // Append the custom HTML to the autocomplete dropdown
+                return $("<li>")
+                    .append(item.html)
+                    .appendTo(ul);
+            };
+        })
     </script>
 @endpush

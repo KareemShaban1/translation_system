@@ -63,16 +63,16 @@ class ReceiveCash extends Model
 
     protected static function booted()
     {
+     
         // while creating order make order number take the next available number
         static::creating(function (ReceiveCash $receiveCash) {
-            $deleted_receipt_number = ReceiveCash::where('receipt_number', ReceiveCash::getNextOrderNumber())
-                ->where('deleted_at', '<>', null)
-                ->first(); // Use 'first()' to get a single result
-                dd($receiveCash , ReceiveCash::getNextOrderNumber());
+            $deleted_receiveCash = ReceiveCash::onlyTrashed()
+            ->whereNotNull('deleted_at')
+            ->get();
 
-            if ($deleted_receipt_number !== null) {
+            if ($deleted_receiveCash !== null) {
                 // If there is a deleted receipt number, use it
-                $receiveCash->receipt_number = $deleted_receipt_number->receipt_number;
+                $receiveCash->receipt_number = ReceiveCash::getNextOrderNumber() + 1;
             } else {
                 // If not, use the next available order number
                 $receiveCash->receipt_number = ReceiveCash::getNextOrderNumber();

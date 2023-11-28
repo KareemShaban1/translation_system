@@ -37,9 +37,11 @@ class ClientController extends Controller
         //
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20',
+            'phone_number' => 'required|string|max:20|exists:clients,phone_number',
             'another_phone_number' => 'nullable|string|max:20',
             'address' => 'required|string|max:255',
+        ],[
+            'phone_number.exists'=>'هذا الرقم موجود بالفعل'
         ]);
     
         // dd($validatedData);
@@ -123,5 +125,15 @@ class ClientController extends Controller
         $pdf =  PDF::loadView('backend2.pages.clients.client_report',$data);
         return $pdf->stream('Report.pdf');
         
+    }
+
+    public function clientsAutocomplete(Request $request){
+        $term = $request->input('term');
+
+        $clients = Client::where('name', 'LIKE', '%' . $term . '%')
+            ->select('name', 'id') // Select both name and id
+            ->get(); // Retrieve the matching customers
+
+        return response()->json($clients);
     }
 }

@@ -60,6 +60,8 @@ class ReceiveCashController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
+
         $validatedData = $request->validate([
             'receive_date' => 'required|date',
             'service_id' => 'required|exists:services,id',
@@ -128,7 +130,6 @@ class ReceiveCashController extends Controller
             'paid_amount' => 'required|numeric',
             'remaining_amount' => 'required|numeric',
             'description'=>'nullable'
-
         ]);
         
         $receiveCash->update($validatedData);
