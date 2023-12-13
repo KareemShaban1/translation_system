@@ -164,6 +164,9 @@
                         <ul id="receive_cash" class="collapse" data-parent="#sidebarnav">
                             <li> <a href="{{ route('receive_cash.create') }}">أضافة أستلام نقدية</a> </li>
                             <li> <a href="{{ route('receive_cash.index') }}">كل أستلامات نقدية</a> </li>
+                            <li> <a href="{{ route('receive_cash.cashReceive') }}"> أستلامات النقدية الكاش</a> </li>
+                            <li> <a href="{{ route('receive_cash.onlineReceive') }}"> أستلامات النقدية الأونلاين</a>
+                            </li>
                             <li> <a href="{{ route('receive_cash.reports') }}">تقاير أستلامات نقدية</a> </li>
 
                         </ul>

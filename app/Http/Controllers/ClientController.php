@@ -37,11 +37,11 @@ class ClientController extends Controller
         //
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20|exists:clients,phone_number',
+            'phone_number' => 'required|string|max:20|unique:clients,phone_number',
             'another_phone_number' => 'nullable|string|max:20',
             'address' => 'required|string|max:255',
         ],[
-            'phone_number.exists'=>'هذا الرقم موجود بالفعل'
+            'phone_number.unique'=>'هذا الرقم موجود بالفعل'
         ]);
     
         // dd($validatedData);

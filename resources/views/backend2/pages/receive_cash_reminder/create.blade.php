@@ -74,6 +74,19 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="type">النوع</label>
+                        <select name="type" id="type" class="custom-select mr-sm-2">
+                            <option value="cash">كاش</option>
+                            <option value="online">أونلاين</option>
+                        </select>
+                        @error('type')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row">
 
                     <div class="form-group col-md-12">
                         <label for="description">الوصف</label>

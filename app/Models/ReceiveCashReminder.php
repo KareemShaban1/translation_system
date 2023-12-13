@@ -23,10 +23,11 @@ class ReceiveCashReminder extends Model
      * @var array
      */
     protected $fillable = ['receive_cash_id','receive_cash_reminder_date','paid_amount','remaining_amount',
-    'description'
+    'description','type'
 ];
 
-    public function receiveCash(){
+    public function receiveCash()
+    {
         return $this->belongsTo(ReceiveCash::class);
     }
 }

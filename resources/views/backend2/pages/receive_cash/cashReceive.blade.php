@@ -1,7 +1,6 @@
 @extends('backend2.layouts.master')
 
 @push('css')
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.1/css/dataTables.dateTime.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
@@ -21,7 +20,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="text-primary page-title"> أستلام نقدية اليوم</h6>
+            <h6 class="text-primary page-title"> أستلام نقدية الكاش اليوم</h6>
         </div>
 
         <div class="card-body">
@@ -40,7 +39,6 @@
                             <th> المبلغ المدفوع </th>
                             <th> المبلغ الباقى </th>
                             <th>أضافة باقى</th>
-                            <th>نوع الدفع</th>
                             <th>العمليات</th>
                         </tr>
                     </thead>
@@ -108,14 +106,6 @@
                                         تم الدفع
                                     @endif
                                 </td>
-
-                                <td>
-                                    @if ($cash->type == 'cash')
-                                        <span class="text-success" style="font-size: 15px; font-weight:bold">كاش</span>
-                                    @else
-                                        <span class="text-info" style="font-size: 15px; font-weight:bold">اونلاين</span>
-                                    @endif
-                                </td>
                                 <td style="padding: 5px">
                                     @can('receive-edit')
                                         <a href="{{ route('receive_cash.edit', $cash->id) }}" class="btn btn-warning">
@@ -150,38 +140,14 @@
                     </tbody>
 
                     <tfoot>
-                        <tr>
-                            <td>
-                                <span class="text-dark" style="font-size: 17px; font-weight:bold"> الأجمالى </span>
-                            </td>
-                            <td colspan="9" style="text-align: center" id="totalAmount">
-                                {{ ($receiveCash ? $receiveCash->sum('paid_amount') : 0) +
-                                    ($today_reminder ? $today_reminder->sum('paid_amount') : 0) }}
-                                جنية
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span class="text-success" style="font-size: 17px; font-weight:bold">أجمالى نقدى</span>
-                            </td>
-                            <td colspan="9" style="text-align: center" id="totalAmount">
-                                {{ ($receiveCash ? $receiveCash->where('type', 'cash')->sum('paid_amount') : 0) +
-                                    ($today_reminder ? $today_reminder->where('type', 'cash')->sum('paid_amount') : 0) }}
-                                جنية
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <span class="text-info" style="font-size: 17px; font-weight:bold"> أجمالى اونلاين </span>
-                            </td>
-                            <td colspan="9" style="text-align: center" id="totalAmount">
-                                {{ ($receiveCash ? $receiveCash->where('type', 'online')->sum('paid_amount') : 0) +
-                                    ($today_reminder ? $today_reminder->where('type', 'online')->sum('paid_amount') : 0) }}
-                                جنية
-                            </td>
-                        </tr>
+                        <td>
+                            الأجمالى
+                        </td>
+                        <td colspan="8" style="text-align: center" id="totalAmount">
+                            {{ ($receiveCash ? $receiveCash->sum('paid_amount') : 0) +
+                                ($today_reminder ? $today_reminder->sum('paid_amount') : 0) }}
+                            جنية
+                        </td>
                     </tfoot>
                 </table>
             </div>

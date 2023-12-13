@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 // use Barryvdh\DomPDF\Facade\Pdf;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
-
 class ReceiveCashController extends Controller
 {
     /**
@@ -21,21 +20,39 @@ class ReceiveCashController extends Controller
      */
     public function index()
     {
-        //
+
         $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->
-        with('user','client','service_provider','service')->latest()->get();
-        return view('backend2.pages.receive_cash.index',compact('receiveCash'));
+        with('user', 'client', 'service_provider', 'service')->latest()->get();
+        return view('backend2.pages.receive_cash.index', compact('receiveCash'));
+    }
+
+    public function cashReceive()
+    {
+
+        $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->
+        where('type', 'cash')->
+        with('user', 'client', 'service_provider', 'service')->latest()->get();
+        return view('backend2.pages.receive_cash.cashReceive', compact('receiveCash'));
+    }
+
+    public function onlineReceive()
+    {
+
+        $receiveCash = ReceiveCash::whereDate('receive_date', Carbon::today())->
+        where('type', 'online')->
+        with('user', 'client', 'service_provider', 'service')->latest()->get();
+        return view('backend2.pages.receive_cash.onlineReceive', compact('receiveCash'));
     }
 
 
     public function reports()
     {
         //
-        $receiveCash = ReceiveCash::with('user','client','service_provider','service')
+        $receiveCash = ReceiveCash::with('user', 'client', 'service_provider', 'service')
         ->latest('created_at') // Order by created_at column in descending order
         ->get();
-        
-        return view('backend2.pages.receive_cash.reports',compact('receiveCash'));
+
+        return view('backend2.pages.receive_cash.reports', compact('receiveCash'));
     }
 
     /**
@@ -49,8 +66,10 @@ class ReceiveCashController extends Controller
         $users = User::all();
         $clients = Client::all();
         $languages = Languages::all();
-        return view('backend2.pages.receive_cash.create',
-        compact('services','service_providers','users','clients','languages'));
+        return view(
+            'backend2.pages.receive_cash.create',
+            compact('services', 'service_providers', 'users', 'clients', 'languages')
+        );
 
     }
 
@@ -73,15 +92,16 @@ class ReceiveCashController extends Controller
             'service_price' => 'required|numeric',
             'paid_amount' => 'required|numeric',
             'remaining_amount' => 'required|numeric',
-            'description'=>'nullable'
+            'description' => 'nullable',
+            'type' => 'required'
         ]);
 
         ReceiveCash::create($validatedData);
 
         return redirect()->route('receive_cash.index');
 
-        
-        
+
+
     }
 
     /**
@@ -105,8 +125,10 @@ class ReceiveCashController extends Controller
         $clients = Client::all();
         $languages = Languages::all();
 
-        return view('backend2.pages.receive_cash.edit',
-        compact('receiveCash','services','service_providers','users','clients','languages'));
+        return view(
+            'backend2.pages.receive_cash.edit',
+            compact('receiveCash', 'services', 'service_providers', 'users', 'clients', 'languages')
+        );
 
     }
 
@@ -117,7 +139,7 @@ class ReceiveCashController extends Controller
     {
         //
         $receiveCash = ReceiveCash::findOrFail($id);
-        
+
         $validatedData = $request->validate([
             'receive_date' => 'required|date',
             'service_id' => 'required|exists:services,id',
@@ -129,9 +151,10 @@ class ReceiveCashController extends Controller
             'service_price' => 'required|numeric',
             'paid_amount' => 'required|numeric',
             'remaining_amount' => 'required|numeric',
-            'description'=>'nullable'
+            'description' => 'nullable',
+            'type' => 'required'
         ]);
-        
+
         $receiveCash->update($validatedData);
 
         return redirect()->route('receive_cash.index');
@@ -150,14 +173,15 @@ class ReceiveCashController extends Controller
 
     }
 
-    public function pdfReport($id){
-        
+    public function pdfReport($id)
+    {
+
         $receiveCash = ReceiveCash::findOrFail($id);
         $data = [
-            'receiveCash'=>$receiveCash
+            'receiveCash' => $receiveCash
         ];
-        
-        $pdf =  PDF::loadView('backend2.pages.receive_cash.pdf_report',$data);
+
+        $pdf =  PDF::loadView('backend2.pages.receive_cash.pdf_report', $data);
         return $pdf->stream('Report.pdf');
     }
 
@@ -166,17 +190,18 @@ class ReceiveCashController extends Controller
 
     //     return view('backend2.pages.receive_cash.pdf_report',compact('receiveCash'));
 
-        
+
     // }
 
-    public function test($id){
-        
+    public function test($id)
+    {
+
         $receiveCash = ReceiveCash::findOrFail($id);
         // $data = [
         //     'receiveCash'=>$receiveCash
         // ];
-        return view('backend2.pages.receive_cash.test',compact('receiveCash'));
-        
+        return view('backend2.pages.receive_cash.test', compact('receiveCash'));
+
         // $pdf =  PDF::loadView('backend2.pages.receive_cash.pdf_report',$data);
         // return $pdf->stream('Report.pdf');
     }
